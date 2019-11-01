@@ -1,0 +1,274 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+
+/* Styling the header of the summary block */
+
+.cplc-summary-block {
+    background-color: #fff;
+    padding: 26px 18px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px 1px #cacaca;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 16px;
+}
+
+.cplc-summary-block_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.cplc-logo {
+    margin-bottom: 15px;
+}
+
+.cplc-heading-text {
+    margin-bottom: 34px;
+}
+
+.cplc-summary-block_header_month {
+    background-color: #0188d0;
+    padding: 2px 14px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+span.cplc-month {
+    font-size: 15px;
+}
+
+.cplc-summary-block_header_monthly_pay {
+    color: #0188d0;
+    font-weight: 900;
+}
+
+.cplc-summary-block_body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cplc-summary-block_body_interest_rate h5,
+.cplc-summary-block_body_interest_amount h5,
+.cplc-summary-block_body_total_payment h5 {
+    font-size: 17px;
+}
+
+.cplc-summary-block_body_interest_rate p,
+.cplc-summary-block_body_interest_amount p,
+.cplc-summary-block_body_total_payment p {
+    font-size: 22px;
+}
+
+.cplc-body-section,
+.cplc-header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cplc-text-center {
+    text-align: center;
+}
+
+.cplc-input-text {
+    text-align: center;
+}
+
+.cplc-container {
+    padding: 68px 10px;
+    margin: 15px auto;
+    max-width: 720px;
+    background-color: #fff;
+}
+
+.cplc-container p {
+    font-weight: 500;
+    ;
+}
+
+button#cplc-launch-prequalify-modal {
+    background-color: #0188d0;
+    color: #fff;
+    border-radius: 4px;
+    text-transform: capitalize;
+    font-weight: 500;
+    width: 283px;
+    margin: 0 5px;
+    padding: 4px 16px;
+    transition-property: all;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+    transition-delay: 1s;
+}
+
+button#cplc-launch-prequalify-modal:hover {
+    background-color: #0188d0db;
+}
+
+.cplc-footer-section {
+    text-align: center;
+}
+
+.cplc-loan-calculator p.cplc-small-text {
+    font-size: 15px;
+}
+
+.cplc-footer-sub-text {
+    max-width: 559px;
+    border-top: 1px solid #dadada;
+    padding-top: 10px;
+}
+
+.cplc-mt-small {
+    margin-top: 10px;
+}
+
+.cplc-mb-small {
+    margin-top: 10px;
+}
+
+.cplc-mb-medium {
+    margin-bottom: 25px;
+}
+
+.cplc-mt-medium {
+    margin-bottom: 25px;
+}
+
+.cplc-input-field {
+    display: flex;
+    flex-direction: row;
+}
+
+.cplc-input-field input#cplc-amount-input {
+    width: 170px;
+}
+
+.cplc-input-field .cplc-label {
+    display: none;
+    margin-right: 20px;
+    line-height: 52px;
+}
+
+div#cplc-error-messages {
+    color: #f10000;
+    font-size: 17px;
+}
+
+.cplc-footer-button {
+    display: none;
+}
+
+
+/* 
+
+
+
+form#cplc-form,
+div.cplc-container {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+form#cplc-form .row {
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+form#cplc-form input[type="text"] {
+    width: 60%;
+    height: 45px;
+    padding: 10px 10px 10px 90px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    color: #333;
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
+}
+
+form#cplc-form input[type="text"]+label {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 45px;
+    line-height: 40px;
+    font-size: 23px;
+    font-weight: bold;
+    width: 80px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: white;
+    background: #0288D1;
+    border-radius: 3px 0 0 3px;
+    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
+    -webkit-transform: translateZ(0) translateX(0);
+    transform: translateZ(0) translateX(0);
+}
+
+form#cplc-form input[type="text"]:focus {
+    padding-left: 10px;
+}
+
+form#cplc-form input[type="text"]:focus+label {
+    -webkit-transform: translateZ(0) translateX(-100%);
+    transform: translateZ(0) translateX(-100%);
+}
+
+form#cplc-form button {
+    position: relative;
+    overflow: hidden;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: white;
+    border: none;
+    background: #0288D1;
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
+    -webkit-transform: translateZ(0) translateX(0);
+    transform: translateZ(0) translateX(0);
+    z-index: 2;
+}
+
+form#cplc-form button:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #01579B;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
+    -webkit-transform: translateZ(0) scale(0);
+    transform: translateZ(0) scale(0);
+    z-index: -1;
+}
+
+form#cplc-form button:hover:before,
+form#cplc-form button:focus:before {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
+} */
+
+.
