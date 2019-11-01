@@ -10,11 +10,12 @@
     background-color: #fff;
     padding: 26px 18px;
     border-radius: 5px;
-    box-shadow: 0px 1px 3px 1px #cacaca;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    margin-bottom: 16px;
+    box-shadow: 0px 4px 11px 2px rgba(6, 8, 9, .16);
+    max-width: 536px;
+    margin: 0 auto 18px auto;
 }
 
 .cplc-summary-block_header {
@@ -25,6 +26,7 @@
 
 .cplc-logo {
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .cplc-heading-text {
@@ -33,9 +35,15 @@
 
 .cplc-summary-block_header_month {
     background-color: #0188d0;
-    padding: 2px 14px;
+    padding: 1px 16px;
     border-radius: 4px;
     color: #fff;
+    font-size: 16px;
+    height: 27px;
+}
+
+#cplc-results {
+    display: none;
 }
 
 span.cplc-month {
@@ -45,6 +53,7 @@ span.cplc-month {
 .cplc-summary-block_header_monthly_pay {
     color: #0188d0;
     font-weight: 900;
+    font-size: 28px;
 }
 
 .cplc-summary-block_body {
@@ -55,20 +64,20 @@ span.cplc-month {
 .cplc-summary-block_body_interest_rate h5,
 .cplc-summary-block_body_interest_amount h5,
 .cplc-summary-block_body_total_payment h5 {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .cplc-summary-block_body_interest_rate p,
 .cplc-summary-block_body_interest_amount p,
 .cplc-summary-block_body_total_payment p {
-    font-size: 22px;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .cplc-body-section,
 .cplc-header-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .cplc-text-center {
@@ -80,15 +89,11 @@ span.cplc-month {
 }
 
 .cplc-container {
-    padding: 68px 10px;
+    padding: 68px 31px;
     margin: 15px auto;
     max-width: 720px;
     background-color: #fff;
-}
-
-.cplc-container p {
-    font-weight: 500;
-    ;
+    font-family: sans-serif;
 }
 
 button#cplc-launch-prequalify-modal {
@@ -122,6 +127,7 @@ button#cplc-launch-prequalify-modal:hover {
     max-width: 559px;
     border-top: 1px solid #dadada;
     padding-top: 10px;
+    margin: 0 auto;
 }
 
 .cplc-mt-small {
@@ -143,10 +149,14 @@ button#cplc-launch-prequalify-modal:hover {
 .cplc-input-field {
     display: flex;
     flex-direction: row;
+    margin: 0 auto;
 }
 
 .cplc-input-field input#cplc-amount-input {
-    width: 170px;
+    width: 179px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .cplc-input-field .cplc-label {
@@ -158,117 +168,147 @@ button#cplc-launch-prequalify-modal:hover {
 div#cplc-error-messages {
     color: #f10000;
     font-size: 17px;
+    text-align: center;
+    font-weight: 600;
 }
 
 .cplc-footer-button {
     display: none;
 }
 
-
-/* 
-
-
-
-form#cplc-form,
-div.cplc-container {
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 600px;
+#cplc-loading-shimmer {
+    display: none;
 }
 
-form#cplc-form .row {
-    margin-bottom: 25px;
+.cplc-loading-shimmer .cplc-summary-block {
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: placeHolderShimmer;
+    -webkit-animation-timing-function: linear;
+    background: #f6f7f9;
+    background-image: linear-gradient(to right, #f6f7f9 0%, #e9ebee 20%, #f6f7f9 40%, #f6f7f9 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 104px;
+    height: 104px;
     position: relative;
-    overflow: hidden;
 }
 
-form#cplc-form input[type="text"] {
-    width: 60%;
-    height: 45px;
-    padding: 10px 10px 10px 90px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    color: #333;
-    border-radius: 3px;
-    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
+.cplc-loading-shimmer .cplc-summary-block_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
 }
 
-form#cplc-form input[type="text"]+label {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    height: 45px;
-    line-height: 40px;
-    font-size: 23px;
-    font-weight: bold;
-    width: 80px;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    color: white;
-    background: #0288D1;
-    border-radius: 3px 0 0 3px;
-    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
-    -webkit-transform: translateZ(0) translateX(0);
-    transform: translateZ(0) translateX(0);
+.cplc-loading-shimmer .cplc-monthly-amount {
+    width: 86px;
+    background-color: #fff;
+    display: inline-block;
+    height: 20px;
 }
 
-form#cplc-form input[type="text"]:focus {
-    padding-left: 10px;
+.cplc-loading-shimmer .cplc-summary-block_header_month {
+    width: 75px;
+    background-color: #9fcbe2;
+    display: inline-block;
+    height: 20px;
 }
 
-form#cplc-form input[type="text"]:focus+label {
-    -webkit-transform: translateZ(0) translateX(-100%);
-    transform: translateZ(0) translateX(-100%);
+.cplc-loading-shimmer .cplc-summary-block {
+    padding: 26px 18px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px 1px #cacaca;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 16px;
 }
 
-form#cplc-form button {
-    position: relative;
-    overflow: hidden;
-    height: 40px;
-    line-height: 40px;
-    padding: 0 20px;
-    font-size: 12px;
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    color: white;
-    border: none;
-    background: #0288D1;
-    border-radius: 3px;
-    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
-    -webkit-transform: translateZ(0) translateX(0);
-    transform: translateZ(0) translateX(0);
-    z-index: 2;
+.cplc-loading-shimmer .cplc-summary-block_body {
+    display: flex;
+    justify-content: space-between;
 }
 
-form#cplc-form button:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background: #01579B;
-    height: 100%;
-    width: 100%;
-    border-radius: 3px;
-    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
-    -webkit-transform: translateZ(0) scale(0);
-    transform: translateZ(0) scale(0);
-    z-index: -1;
+.cplc-loading-shimmer .cplc-summary-block_body .cplc-summary-block_body_interest_rate h5,
+.cplc-loading-shimmer .cplc-summary-block_body_interest_amount h5,
+.cplc-loading-shimmer .cplc-summary-block_body_total_payment h5 {
+    width: 55px;
+    background-color: #fff;
+    display: inline-block;
+    height: 8px;
 }
 
-form#cplc-form button:hover:before,
-form#cplc-form button:focus:before {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    transition: all 0.3s cubic-bezier(1, 0.1, 0, 0.9);
-} */
+.cplc-loading-shimmer .cplc-summary-block_body .cplc-summary-block_body_interest_rate p,
+.cplc-loading-shimmer .cplc-summary-block_body_interest_amount p,
+.cplc-loading-shimmer .cplc-summary-block_body_total_payment p {
+    width: 50px;
+    background-color: #fff;
+    height: 8px;
+    margin-top: 10px;
+}
 
-.
+section.cplc-loading-shimmer {
+    padding: 12px;
+    max-width: 553px;
+    height: 374px;
+    margin: 0 auto 0 auto;
+    background-color: #fff;
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+
+/* Dynamic Background colors */
+
+.cplc-summary-block_header_month.cplc_bg_12 {
+    background-color: #0273bd;
+}
+
+span.cplc-monthly-amount.cplc_text_12,
+span.cplc-month.cplc_text_12 {
+    color: #0273bd;
+}
+
+.cplc-summary-block_header_month.cplc_bg_6 {
+    background-color: #37a6ef;
+}
+
+span.cplc-monthly-amount.cplc_text_6,
+span.cplc-month.cplc_text_6 {
+    color: #37a6ef;
+}
+
+.cplc-summary-block_header_month.cplc_bg_18 {
+    background-color: #f9861a;
+}
+
+span.cplc-monthly-amount.cplc_text_18,
+span.cplc-month.cplc_text_18 {
+    color: #f9861a;
+}
+
+.cplc-summary-block_header_month.cplc_bg_24 {
+    background-color: #19a200;
+}
+
+span.cplc-monthly-amount.cplc_text_24,
+span.cplc-month.cplc_text_24 {
+    color: #19a200;
+}
+
+p.cplc_zero_interest {
+    font-size: 22px;
+    font-weight: 900;
+    color: #00a200;
+}
+
+.cplc-paybright-container p {
+    display: none;
+}

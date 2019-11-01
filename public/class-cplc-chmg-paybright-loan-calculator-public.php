@@ -98,6 +98,18 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-public.js', array( 'jquery' ), $this->version, false );
 
+		wp_localize_script($this->plugin_name, 
+							'cplc_vars',
+								[
+									'ajax_url' => admin_url('admin-ajax.php'),
+									'cplc_available_loan_term_el' => get_option('cplc_available_loan_term_el'),
+									'cplc_available_interest_rates_el' => get_option('cplc_available_interest_rates_el'),
+									'cplc_calculation_method_el' => get_option('cplc_calculation_method_el'),
+									'cplc_chmg_additional_fee_el' => get_option('cplc_chmg_additional_fee_el'),
+									'cplc_minimum_approved_amount_el' => get_option('cplc_minimum_approved_amount_el'),
+ 								]
+							);
+
 	}
 
 }

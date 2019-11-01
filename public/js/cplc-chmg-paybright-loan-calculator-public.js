@@ -1,27 +1,45 @@
+var animation_delay = 300;
 jQuery(document).ready(function($) {
 
     //Listen to the keyup event on the input text field
     $(document).on('keyup', "#cplc-amount-input", function() {
 
-        var increment_amount = 250;
-        var minimum_approved_value = 250;
+        //The additional fee to add to the regular price of the product
+        var cplc_chmg_additional_fee_el = cplc_vars.cplc_chmg_additional_fee_el;
+        var increment_amount = parseFloat(cplc_chmg_additional_fee_el);
 
-        var amount_error = "Please enter an amount larger than or equal to $" + minimum_approved_value;
+        //Minimum valid amount for financing
+        var cplc_minimum_approved_amount_el = cplc_vars.cplc_minimum_approved_amount_el;
+        var minimum_approved_value = parseFloat(cplc_minimum_approved_amount_el);
 
-        //get the float version of the value
-        //var input_amount = $(this).val();
-        var input_amount = parseFloat($(this).val());
+        var minimum_amount_error = "Please enter an amount larger than or equal to $" + minimum_approved_value;
+
+        if (event.which >= 37 && event.which <= 40) {
+            event.preventDefault();
+        }
+
+
+        $(this).val(function(index, value) {
+            value = value.replace(/,/g, ''); // remove commas from existing input
+            value = value.replace("$", ''); // remove commas from existing input
+            $('#cplc-hidden-amount').html(value);
+            return numberWithCommas(value); // add commas back in
+        });
+
+        var input_amount = parseFloat($('#cplc-hidden-amount').html());
 
         if (input_amount >= minimum_approved_value) {
 
             validation_passed();
 
             //var calculation_method = "multiply";
-            var calculation_method = "addition";
+            var cplc_calculation_method_el = cplc_vars.cplc_calculation_method_el;
 
-            if ('addition' == calculation_method) {
+            var calculation_method = cplc_calculation_method_el;
+
+            if ('fixed' == calculation_method) {
                 var loan_amount = input_amount + increment_amount;
-            } else {
+            } else if ('percentage' == calculation_method) {
                 var loan_amount = input_amount * increment_amount;
             }
 
@@ -29,33 +47,47 @@ jQuery(document).ready(function($) {
             calculate_interest_rate(loan_amount);
 
         } else {
-            validation_failed(amount_error);
+            validation_failed(minimum_amount_error);
         }
 
+    });
+
+
+    $(document).on('click', '#cplc-launch-prequalify-modal', function() {
+        jQuery('#pbModal').css("display", "block");
     });
 });
 
 
 function validation_passed() {
+    $('#cplc-results').slideDown(animation_delay);
     $('.cplc-label').css('display', 'inline-block');
     $('.cplc-input-text').css('display', 'none');
     $('.cplc-footer-button').css('display', 'block');
     $('#cplc-error-messages').html("");
+    $('#cplc-loading-shimmer').css('display', 'none');
+
 }
 
 function validation_failed(error_message) {
-    $('#cplc-results').empty();
+    $('#cplc-results').slideUp(animation_delay);
     $('.cplc-label').css('display', 'none');
     $('.cplc-input-text').css('display', 'block');
     $('#cplc-error-messages').html(error_message);
     $('.cplc-footer-button').css('display', 'none');
+    $('#cplc-loading-shimmer').css('display', 'block');
 
 }
 
 function calculate_interest_rate(loan_amount) {
 
-    var available_months = ["6", "12"];
-    var available_rates = ["0", "7.95"]
+
+    var cplc_available_loan_term_el = cplc_vars.cplc_available_loan_term_el;
+    var cplc_available_interest_rates_el = cplc_vars.cplc_available_interest_rates_el;
+
+
+    var available_months = cplc_available_loan_term_el.split(",");
+    var available_rates = cplc_available_interest_rates_el.split(",")
 
 
     var interest_rate_value = '';
@@ -93,22 +125,23 @@ function calculate_interest_rate(loan_amount) {
 
             console.log("Monthly Pay: " + pay_per_month);
 			console.log("Total Payment After " + loan_term + " Months: " + total_payment);
-			
-			
  */
             var htmlOutput = '';
 
-            htmlOutput += "<div class='cplc-summary-block'>";
+            var bg_color = get_custom_background_color(loan_term);
+            var text_color = get_custom_text_color(loan_term);
+            var highlight_interest = get_highlight_interest(interest_rate);
+            htmlOutput += "<div class='cplc-summary-block .cplc-mb-medium'>";
 
             htmlOutput += "<div class='cplc-summary-block_header'>";
-            htmlOutput += "<div class='cplc-summary-block_header_monthly_pay'><span class='cplc-monthly-amount'>$" + pay_per_month + "</span><span class='cplc-month'>/month</span></div>";
-            htmlOutput += "<div class='cplc-summary-block_header_month'><span>" + loan_term + " months</span></div>";
+            htmlOutput += "<div class='cplc-summary-block_header_monthly_pay'><span class='cplc-monthly-amount " + text_color + "'>" + formatCurrency(pay_per_month) + "</span><span class='cplc-month " + text_color + "'>/month</span></div>";
+            htmlOutput += "<div class='cplc-summary-block_header_month " + bg_color + "'><span>" + loan_term + " months</span></div>";
             htmlOutput += "</div>";
 
             htmlOutput += "<div class='cplc-summary-block_body'>";
-            htmlOutput += "<div class='cplc-summary-block_body_interest_rate'><h5>Interest Rate</h5><p>" + interest_rate_value + "%</p></div>";
-            htmlOutput += "<div class='cplc-summary-block_body_interest_amount'><h5>Interest Amount</h5><p>$" + additional_interest_amount + "</p></div>";
-            htmlOutput += "<div class='cplc-summary-block_body_total_payment'><h5>Total Payment</h5><p>$" + total_payment + "</p></div>";
+            htmlOutput += "<div class='cplc-summary-block_body_interest_rate'><h5>Interest Rate</h5><p class='" + highlight_interest + "'>" + interest_rate_value + "%</p></div>";
+            htmlOutput += "<div class='cplc-summary-block_body_interest_amount'><h5>Interest Amount</h5><p>" + formatCurrency(additional_interest_amount) + "</p></div>";
+            htmlOutput += "<div class='cplc-summary-block_body_total_payment'><h5>Total Payment</h5><p>" + formatCurrency(total_payment) + "</p></div>";
             htmlOutput += "</div>";
 
             htmlOutput += "</div>";
@@ -117,7 +150,76 @@ function calculate_interest_rate(loan_amount) {
 
         });
 
+        $('#cplc-results').slideDown(animation_delay)
+
 
     });
 
+}
+
+function get_custom_background_color(loan_term) {
+
+    // return '';
+
+    if (loan_term > 0 && loan_term <= 6) {
+        return 'cplc_bg_6';
+    } else if (loan_term > 6 && loan_term <= 12) {
+        return 'cplc_bg_12';
+    } else if (loan_term > 12 && loan_term <= 18) {
+        return 'cplc_bg_18';
+    } else if (loan_term > 18 && loan_term <= 24) {
+        return 'cplc_bg_24';
+    }
+
+}
+
+function get_highlight_interest(interest_rate) {
+    if (0 == interest_rate) {
+        return 'cplc_zero_interest';
+    } else {
+        return 'cplc_normal_rate';
+    }
+}
+
+function get_custom_text_color(loan_term) {
+    //return '';
+    if (loan_term > 0 && loan_term <= 6) {
+        return 'cplc_text_6';
+    } else if (loan_term > 6 && loan_term <= 12) {
+        return 'cplc_text_12';
+    } else if (loan_term > 12 && loan_term <= 18) {
+        return 'cplc_text_18';
+    } else if (loan_term > 18 && loan_term <= 24) {
+        return 'cplc_text_24';
+    }
+
+}
+
+
+function formatCurrency(num) {
+    num = num.toString().replace(/\$|\,/g, '');
+    if (isNaN(num)) {
+        num = "0";
+    }
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num * 100 + 0.50000000001);
+    cents = num % 100;
+    num = Math.floor(num / 100).toString();
+
+    if (cents < 10) {
+        cents = "0" + cents;
+    }
+    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++) {
+        num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+    }
+
+    return (((sign) ? '' : '-') + '$' + num + '.' + cents);
+}
+
+
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return "$" + parts.join(".");
 }
