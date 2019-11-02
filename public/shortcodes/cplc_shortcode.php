@@ -1,7 +1,12 @@
 <?php
 
+//include_once( CPLC_ROOT_PATH.'cplc-custom-utils/cplc-db-utils.php' );
+
+require_once plugin_dir_path( __FILE__ ).'../cplc-custom-utils/cplc-db-utils.php';
 
 add_shortcode('cplc_show_calculator', 'cplc_show_calculator_cb');
+
+
 
 function cplc_show_calculator_cb($attr){
     extract(shortcode_atts(array(
@@ -10,7 +15,7 @@ function cplc_show_calculator_cb($attr){
 
         ob_start();
 ?>
-
+ 
 
 
         <div class="cplc-container cplc-loan-calculator">
@@ -41,8 +46,71 @@ function cplc_show_calculator_cb($attr){
                     <?php endif; ?>
                 </div>
                 <div class="cplc-input-field">
-                             <!-- <label for="cplc-loan-amount" class="cplc-label">See how you can split</label> -->
-                             <input type="text" name="cplc-loan-amount" id="cplc-amount-input" class="cplc-amount-input"/>
+                             
+                <?php if( 'input' == get_option('cplc_chmg_loan_amount_input_el')): ?>
+                            <!-- <label for="cplc-loan-amount" class="cplc-label">See how you can split</label> -->
+                             <input type="text" name="cplc-loan-amount" placeholder="Loan Amount" id="cplc-amount-input" class="cplc-amount-input"/>
+                <?php elseif('select'): ?>            
+                           
+                <?php
+                 //print_r(CPLC_DB_Utils::get_products());
+
+                 $cplc_all_product = CPLC_DB_Utils::get_products();
+
+                // print_r(CPLC_DB_Utils::get_products_variations(8336));
+                 ?>
+                             <select name="cplc-loan-amount_select" id="cplc-amount-select">
+
+                            
+                                 <option value="">select product</option>
+                                 <?php foreach($cplc_all_product as $product_id): ?>
+
+                                 <?php
+                                     $product = wc_get_product( $product_id );
+                                 ?>
+                                    <?php if ($product->is_type( 'variable' )): ?>
+                                        <option style="display: none;" value=""><?php echo $product->get_name(); ?></option>
+                                        <?php
+                                                $variations = CPLC_DB_Utils::get_products_variations($product_id);
+                                        ?>
+
+                                        <?php foreach($variations as $product_id): ?>
+                                            <?php
+
+                                                $product = wc_get_product( $product_id );
+                                                $variation_product_name = $product->get_name();
+                                                $variation_product_regular_price = $product->get_regular_price();
+                                                $variation_product_sales_price = $product->get_sale_price();
+    
+                                                if(!empty($variation_product_sales_price)){
+                                                    $variation_product_price = $variation_product_sales_price;
+                                                }else{
+                                                    $variation_product_price = $variation_product_regular_price;
+                                                }
+                                            ?>
+                                            <option value="<?php echo $variation_product_price; ?>"><?php echo $variation_product_name; ?></option>
+                                        <?php endforeach;?>
+                                    <?php else: ?>
+
+                                        <?php
+                                            $product_name = $product->get_name();
+                                            $product_regular_price = $product->get_regular_price();
+                                            $product_sales_price = $product->get_sale_price();
+
+                                            if(!empty($product_sales_price)){
+                                                $product_price = $product_sales_price;
+                                            }else{
+                                                $product_price = $product_regular_price;
+                                            }
+
+                                        ?>
+                                        <option value="<?php echo $product_price; ?>"><?php echo $product_name; ?></option>
+                                    <?php endif; ?>
+                                 <?php endforeach;?>
+                             </select>
+                <?php endif; ?>
+
+               
                             <span style="display: none;" id="cplc-hidden-amount" ></span>
                 </div>
             </div>
@@ -50,10 +118,11 @@ function cplc_show_calculator_cb($attr){
 
             
             <div id="cplc-results" class="cplc-mb-medium">
-                <!-- <div class="cplc-summary-block">
+                  <div class="cplc-summary-block">
                     <div class="cplc-summary-block_header">
                         <div class="cplc-summary-block_header_monthly_pay"><span class="cplc-monthly-amount">1000</span><span class="cplc-month">/month</span></div>
                         <div class="cplc-summary-block_header_month"><span>6 months</span></div>
+                        <div class="cplc-close"><span>X</span></div>
                     </div>
 
                     <div class='cplc-summary-block_body'>
@@ -61,7 +130,7 @@ function cplc_show_calculator_cb($attr){
                         <div class='cplc-summary-block_body_interest_amount'><h5>Interest Amount</h5><p>0.00%</p></div>
                         <div class='cplc-summary-block_body_total_payment'><h5>Total Payment</h5><p>$3,000.00</p></div>
                      </div>
-                </div> -->
+                </div>  
             </div>
 
             <div id="cplc-error-messages" class="cplc-mb-medium"></div>
@@ -127,9 +196,10 @@ function cplc_show_calculator_cb($attr){
 
         </div>
         <!-- / Container Section -->
-        <?php pb_modal();?>
+        
             
-
+        <script id='paybright' type='text/javascript' src='https://app.healthsmartfinancial.com/api/pb_woocommerce.js?public_key=6ehgkT9K1KvH137bZdjQNXFCG4KeXWLXNxaUm4gPdWK3bhPHD7&financedamount=$1000'></script>
+        <div id='paybright-widget-container' class='cplc-paybright-container'></div>
 
             
 
@@ -143,12 +213,4 @@ function cplc_show_calculator_cb($attr){
 
     }
 
-    function pb_modal() {
-        /*  $pb_product_price = get_post_meta( get_the_ID(), '_price', true);
-         $pb_product_price = $pb_product_price * 1.10;
-         $pb_product_format = number_format((float)$pb_product_price, 2, '.', ''); */
-         $pb_product_format = 1000;
-      
-         echo "<script id='paybright' type='text/javascript' src='https://app.healthsmartfinancial.com/api/pb_woocommerce.js?public_key=6ehgkT9K1KvH137bZdjQNXFCG4KeXWLXNxaUm4gPdWK3bhPHD7&financedamount=$$pb_product_format'></script>
-         <div id='paybright-widget-container' class='cplc-paybright-container'></div>";
-     }
+     

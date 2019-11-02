@@ -16,12 +16,24 @@
     box-shadow: 0px 4px 11px 2px rgba(6, 8, 9, .16);
     max-width: 536px;
     margin: 0 auto 18px auto;
+    position: relative;
 }
 
 .cplc-summary-block_header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
+    margin-top: 15px;
+}
+
+.cplc-close {
+    position: absolute;
+    top: 0;
+    right: 22px;
+    color: red;
+    font-weight: 500;
+    font-size: 23px;
+    cursor: pointer;
 }
 
 .cplc-logo {
@@ -109,6 +121,8 @@ button#cplc-launch-prequalify-modal {
     transition-duration: 2s;
     transition-timing-function: linear;
     transition-delay: 1s;
+    font-family: sans-serif;
+    height: 60px;
 }
 
 button#cplc-launch-prequalify-modal:hover {
@@ -149,14 +163,44 @@ button#cplc-launch-prequalify-modal:hover {
 .cplc-input-field {
     display: flex;
     flex-direction: row;
-    margin: 0 auto;
+    margin: 0 auto 20px;
 }
 
 .cplc-input-field input#cplc-amount-input {
     width: 179px;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
+    font-family: sans-serif;
+}
+
+select#cplc-amount-select {
+    display: block;
+    width: 179px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-family: sans-serif;
+
+    
+    
+}
+
+select#cplc-amount-select,
+.cplc-input-field input#cplc-amount-input
+{
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 0 .75em;
+    height: 2.507em;
+     border-radius: 0;
+    max-width: 100%;
+    width: 100%;
+    vertical-align: middle;
+    background-color: #fff;
+    color: #333;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    transition: color .3s, border .3s, background .3s, opacity .3s;
 }
 
 .cplc-input-field .cplc-label {

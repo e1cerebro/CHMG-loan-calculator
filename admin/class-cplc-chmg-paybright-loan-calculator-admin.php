@@ -149,6 +149,17 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 
 			/* CHMG additional Fee*/
 			add_settings_field(
+				'cplc_chmg_loan_amount_input_el',
+				__( 'Loan Amount Input', CPLC_CHMG_TEXT_DOMAIN),
+				[ $this,'cplc_chmg_loan_amount_input_cb'],
+				$this->plugin_name,
+				'cplc_general_section'
+			 );
+			register_setting( $this->plugin_name, 'cplc_chmg_loan_amount_input_el');
+	
+
+			/* CHMG additional Fee*/
+			add_settings_field(
 				'cplc_chmg_additional_fee_el',
 				__( 'CHMG additional Fee', CPLC_CHMG_TEXT_DOMAIN),
 				[ $this,'cplc_chmg_additional_fee_cb'],
@@ -323,7 +334,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 
 	public function cplc_chmg_additional_fee_cb(){
 		$cplc_chmg_additional_fee_el =  get_option('cplc_chmg_additional_fee_el');
-
+ 	
 		?>
 
 			 <div class="ui input">
@@ -347,6 +358,24 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 		<?php
 		
 	}
+
+	public function cplc_chmg_loan_amount_input_cb(){
+		$cplc_chmg_loan_amount_input_el =  get_option('cplc_chmg_loan_amount_input_el');
+
+		?>
+			<div class="ui form">
+				<div class="field">
+ 					<select class="ui search dropdown" style="width:28%;" name="cplc_chmg_loan_amount_input_el">
+						<option value="input" <?php echo 'input' == $cplc_chmg_loan_amount_input_el ? 'SELECTED' : ''; ?>><?php _e('Normal Input Field', CPLC_CHMG_TEXT_DOMAIN) ?></option>
+						<option value="select" <?php echo 'select' == $cplc_chmg_loan_amount_input_el ? 'SELECTED' : ''; ?>><?php _e('Product Dropdown Input', CPLC_CHMG_TEXT_DOMAIN) ?></option> 
+					</select>
+				</div>
+			</div>
+
+		<?php
+		
+	}
+
 
 	public function cplc_calculation_method_cb(){
 		$cplc_calculation_method_el =  get_option('cplc_calculation_method_el');

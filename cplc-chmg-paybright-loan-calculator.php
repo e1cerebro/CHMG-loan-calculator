@@ -37,6 +37,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'CPLC_CHMG_PAYBRIGHT_LOAN_CALCULATOR_VERSION', '1.0.0' );
 define( 'CPLC_CHMG_TEXT_DOMAIN', 'cplc-chmg-paybright-loan-calculator' );
+define('CPLC_ROOT_PATH', plugin_dir_url( __FILE__ ).'public/');
+
 
 /**
  * The code that runs during plugin activation.
