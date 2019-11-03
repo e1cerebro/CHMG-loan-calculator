@@ -52,23 +52,16 @@ function cplc_show_calculator_cb($attr){
                              <input type="text" name="cplc-loan-amount" placeholder="Loan Amount" id="cplc-amount-input" class="cplc-amount-input"/>
                 <?php elseif('select'): ?>            
                            
-                <?php
-                 //print_r(CPLC_DB_Utils::get_products());
+                <?php $cplc_all_product = CPLC_DB_Utils::get_product_from_cat()->posts;   ?>
+                             
+                    <select name="cplc-loan-amount_select" id="cplc-amount-select">
 
-                 $cplc_all_product = CPLC_DB_Utils::get_product_from_cat()->posts;
+                             <option value="">select product</option>
+                        <?php foreach($cplc_all_product as $product_id): ?>
 
-                // print_r(CPLC_DB_Utils::get_products_variations(8336));
-                 ?>
-                             <select name="cplc-loan-amount_select" id="cplc-amount-select">
-
-                            
-                                 <option value="">select product</option>
-                                 <?php foreach($cplc_all_product as $product_id): ?>
-
-                                 <?php
-                                     $product = wc_get_product( $product_id );
-                                 ?>
-                                    <?php if ($product->is_type( 'variable' )): ?>
+                            <?php $product = wc_get_product( $product_id ); ?>
+                            <?php if('instock' == $product->get_stock_status()): ?>
+                                <?php if ($product->is_type( 'variable' )): ?>
                                         <option style="display: none;" value=""><?php echo $product->get_name(); ?></option>
                                         <?php
                                                 $variations = CPLC_DB_Utils::get_products_variations($product_id);
@@ -88,9 +81,9 @@ function cplc_show_calculator_cb($attr){
                                                     $variation_product_price = $variation_product_regular_price;
                                                 }
                                             ?>
-                                            <option value="<?php echo $variation_product_price; ?>"><?php echo $variation_product_name; ?></option>
+                                            <option value="<?php echo $variation_product_price; ?>"><?php echo $variation_product_name." - ($".number_format( $variation_product_price, 2, '.', ',' ).")"; ?></option>
                                         <?php endforeach;?>
-                                    <?php else: ?>
+                                <?php else: ?>
 
                                         <?php
                                             $product_name = $product->get_name();
@@ -104,9 +97,10 @@ function cplc_show_calculator_cb($attr){
                                             }
 
                                         ?>
-                                        <option value="<?php echo $product_price; ?>"><?php echo $product_name; ?></option>
-                                    <?php endif; ?>
-                                 <?php endforeach;?>
+                                        <option value="<?php echo $product_price; ?>"><?php echo $product_name." - ($".number_format( $product_price, 2, '.', ',' ).")"; ?></option>
+                                <?php endif; ?>
+                                <?php endif; ?>
+                        <?php endforeach;?>
                              </select>
                 <?php endif; ?>
 

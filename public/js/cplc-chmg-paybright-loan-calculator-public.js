@@ -2,12 +2,10 @@
 var animation_delay = 300;
 jQuery(document).ready(function($) {
 
+    //Give the input field focus when the page loads
     jQuery('#cplc-amount-input').focus();
-   
-    jQuery(document).on('swipeleft', '.cplc-summary-block', function(){
-        console.log("swipped");
-    });
-    
+
+    /* handling the close for each of the card blocks */
     jQuery(document).on('click', '.cplc-close', function(){
         jQuery(this).parent().fadeOut( 300, function() {
             var visible_blocks = jQuery('.cplc-summary-block:visible').length;
@@ -31,13 +29,14 @@ jQuery(document).ready(function($) {
         var cplc_minimum_approved_amount_el = cplc_vars.cplc_minimum_approved_amount_el;
         var minimum_approved_value = parseFloat(cplc_minimum_approved_amount_el);
 
+        //construct the error message
         var minimum_amount_error = "Please enter an amount larger than or equal to $" + minimum_approved_value;
 
         if (event.which >= 37 && event.which <= 40) {
             event.preventDefault();
         }
 
-
+        //format the display of the currency in the input field
         jQuery(this).val(function(index, value) {
             value = value.replace(/,/g, ''); // remove commas from existing input
             value = value.replace("$", ''); // remove commas from existing input
@@ -45,25 +44,29 @@ jQuery(document).ready(function($) {
             return numberWithCommas(value); // add commas back in
         });
 
+        //get the value from the hidden span field
         var input_amount = parseFloat($('#cplc-hidden-amount').html());
 
-
+        //display failed validation to create an animation
         validation_failed(minimum_amount_error);
 
-        setTimeout(function(){ 
-            
-            if (input_amount >= minimum_approved_value) {
+        
 
+        if (input_amount >= minimum_approved_value) {
+        
+            //wait for 1.5s before displaying the results
+            setTimeout(function(){ 
                 validation_passed();
-    
                 loan_amount = get_estimated_loan_amount(input_amount);
                 console.log("Typed Amount: ", input_amount);
                 console.log("Returned Loan Amount: ", loan_amount);
                 calculate_interest_rate(loan_amount);
-            } else {
-                validation_failed(minimum_amount_error);
-            }
-        }, 1500);
+            
+            }, 1500);
+
+        } else {
+            validation_failed(minimum_amount_error);
+        }
 
         
 
@@ -98,27 +101,26 @@ jQuery(document).ready(function($) {
 
     jQuery(document).on('click', '#cplc-launch-prequalify-modal', function() {
 
-
         var input_amount = parseFloat($('#cplc-hidden-amount').html());
         loan_amount = get_estimated_loan_amount(input_amount);
-        var cplc_src = "https://app.paybright.com/Payments/PreApproval/Preapproval_v2.aspx?public_key=6ehgkT9K1KvH137bZdjQNXFCG4KeXWLXNxaUm4gPdWK3bhPHD7&purchase_amount="+loan_amount;
-
+        var cplc_paybright_api = "6ehgkT9K1KvH137bZdjQNXFCG4KeXWLXNxaUm4gPdWK3bhPHD7";
+        var cplc_src = "https://app.paybright.com/Payments/PreApproval/Preapproval_v2.aspx?public_key="+cplc_paybright_api+"&purchase_amount="+loan_amount;
 
         document.getElementById("pb_iframe").src = cplc_src;
         jQuery('#pbModal').css("display", "block");
+
     });
 });
 
 function get_estimated_loan_amount(input_amount, increment_amount){
-   
+
+    //Get the calculation method: fixed or percentage
     var cplc_calculation_method_el = cplc_vars.cplc_calculation_method_el;
     var calculation_method = cplc_calculation_method_el;
 
      //The additional fee to add to the regular price of the product
      var cplc_chmg_additional_fee_el = cplc_vars.cplc_chmg_additional_fee_el;
      var increment_amount = parseFloat(cplc_chmg_additional_fee_el);
-
-     console.log('Increment Amount: ',increment_amount);
 
     if ('fixed' == calculation_method) {
         var loan_amount = input_amount + increment_amount;
@@ -152,23 +154,20 @@ function validation_failed(error_message) {
 
 function calculate_interest_rate(loan_amount) {
 
-
+    //get the available loan term and interest rates offered
     var cplc_available_loan_term_el = cplc_vars.cplc_available_loan_term_el;
     var cplc_available_interest_rates_el = cplc_vars.cplc_available_interest_rates_el;
-
-
-    var available_months = cplc_available_loan_term_el.split(",");
+console.log(cplc_available_loan_term_el);
+    //convert the values to array
+    var available_months = cplc_available_loan_term_el;
     var available_rates = cplc_available_interest_rates_el.split(",")
 
-
+    //
     var interest_rate_value = '';
     var pay_per_month = '';
     var total_payment = '';
 
-    
-
-
-
+   //Remove everything from the result div
     jQuery('#cplc-results').empty();
 
     //Loop through all the available months
@@ -179,30 +178,40 @@ function calculate_interest_rate(loan_amount) {
             if (interest_rate == 0) {
 
                 var result = (loan_amount / loan_term);
-                var Finalresult = result.toFixed(0);
+                var calculated_monthly_pay = result.toFixed(2);
 
             } else {
                 var newinterestrate = interest_rate / 12;
                 var result = ((loan_amount * (newinterestrate / 100) * Math.pow((1 + (newinterestrate / 100)), loan_term)) / ((Math.pow((1 + (newinterestrate / 100)), loan_term)) - 1));
-                var Finalresult = result.toFixed(0);
+                var calculated_monthly_pay = result.toFixed(2);
             }
 
-            interest_rate_value = parseFloat(interest_rate).toFixed(0);
-            pay_per_month = Finalresult;
+            //Get the current interest rate
+            interest_rate_value = parseFloat(interest_rate).toFixed(2);
+
+            //monthly amount the customer pays
+            pay_per_month = calculated_monthly_pay;
+
+            //Total amount to pay at the end of the loan term - pay_per_month * loan_term
             total_payment_addition = parseFloat(pay_per_month) * loan_term;
+
+            //fix the total loan term pay to zero decimal places
             total_payment = total_payment_addition.toFixed(0)
 
+            //additional cost apart from the cost of the product
             additional_interest_amount = (total_payment - loan_amount).toFixed(0);
-            
-            console.log("Month:",loan_term);
-            console.log("total_payment:",total_payment);
-            console.log("Loan Amt:",loan_amount);
+           
 
             var htmlOutput = '';
 
+            //get the dynamic color for the text and backgrounds
             var bg_color = get_custom_background_color(loan_term);
             var text_color = get_custom_text_color(loan_term);
             var highlight_interest = get_highlight_interest(interest_rate);
+            var cplc_card_block_interest_rate_el = cplc_vars.cplc_card_block_interest_rate_el;
+            var cplc_card_block_interest_amount_el = cplc_vars.cplc_card_block_interest_amount_el;
+            var cplc_card_block_total_amount_el = cplc_vars.cplc_card_block_total_amount_el;
+
             htmlOutput += "<div class='cplc-summary-block .cplc-mb-medium'>";
             htmlOutput += "<div class='cplc-close'><span>&times;</span></div>";
 
@@ -212,9 +221,9 @@ function calculate_interest_rate(loan_amount) {
             htmlOutput += "</div>";
 
             htmlOutput += "<div class='cplc-summary-block_body'>";
-            htmlOutput += "<div class='cplc-summary-block_body_interest_rate'><h5>Interest Rate</h5><p class='" + highlight_interest + "'>" + interest_rate_value + "%</p></div>";
-            htmlOutput += "<div class='cplc-summary-block_body_interest_amount'><h5>Interest Amount</h5><p>" + formatCurrency(additional_interest_amount) + "</p></div>";
-            htmlOutput += "<div class='cplc-summary-block_body_total_payment'><h5>Total Payment</h5><p>" + formatCurrency(total_payment) + "</p></div>";
+            htmlOutput += "<div class='cplc-summary-block_body_interest_rate'><h5>"+cplc_card_block_interest_rate_el+"</h5><p class='" + highlight_interest + "'>" + interest_rate_value + "%</p></div>";
+            htmlOutput += "<div class='cplc-summary-block_body_interest_amount'><h5>"+cplc_card_block_interest_amount_el+"</h5><p>" + formatCurrency(additional_interest_amount) + "</p></div>";
+            htmlOutput += "<div class='cplc-summary-block_body_total_payment'><h5>"+cplc_card_block_total_amount_el+"</h5><p>" + formatCurrency(total_payment) + "</p></div>";
             htmlOutput += "</div>";
             htmlOutput += "</div>";
 

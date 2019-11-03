@@ -109,6 +109,9 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 									'cplc_calculation_method_el' => get_option('cplc_calculation_method_el'),
 									'cplc_chmg_additional_fee_el' => get_option('cplc_chmg_additional_fee_el'),
 									'cplc_minimum_approved_amount_el' => get_option('cplc_minimum_approved_amount_el'),
+									'cplc_card_block_interest_rate_el' => get_option('cplc_card_block_interest_rate_el'),
+									'cplc_card_block_interest_amount_el' => get_option('cplc_card_block_interest_amount_el'),
+									'cplc_card_block_total_amount_el' => get_option('cplc_card_block_total_amount_el'),
  								]
 							);
 
