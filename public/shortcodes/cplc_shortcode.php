@@ -54,7 +54,7 @@ function cplc_show_calculator_cb($attr){
                            
                 <?php $cplc_all_product = CPLC_DB_Utils::get_product_from_cat()->posts;   ?>
                              
-                    <select name="cplc-loan-amount_select" id="cplc-amount-select">
+                    <select data-placeholder="Choose categories..." class="chosen-select" name="cplc-loan-amount_select" id="cplc-amount-select">
 
                              <option value="">select product</option>
                         <?php foreach($cplc_all_product as $product_id): ?>
@@ -62,7 +62,7 @@ function cplc_show_calculator_cb($attr){
                             <?php $product = wc_get_product( $product_id ); ?>
                             <?php if('instock' == $product->get_stock_status()): ?>
                                 <?php if ($product->is_type( 'variable' )): ?>
-                                        <option style="display: none;" value=""><?php echo $product->get_name(); ?></option>
+                                         <optgroup label="<?php echo $product->get_name(); ?>">
                                         <?php
                                                 $variations = CPLC_DB_Utils::get_products_variations($product_id);
                                         ?>
@@ -83,6 +83,8 @@ function cplc_show_calculator_cb($attr){
                                             ?>
                                             <option value="<?php echo $variation_product_price; ?>"><?php echo $variation_product_name." - ($".number_format( $variation_product_price, 2, '.', ',' ).")"; ?></option>
                                         <?php endforeach;?>
+
+                                        </optgroup>
                                 <?php else: ?>
 
                                         <?php

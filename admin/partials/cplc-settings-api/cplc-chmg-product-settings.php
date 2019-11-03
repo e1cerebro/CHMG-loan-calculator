@@ -40,7 +40,7 @@ class CplcProductSettings{
 
 		?>
 			<div class="ui input">
-				<select  data-placeholder="Choose categories..." name="cplc_include_categories_el[]" multiple class="chosen-select">
+				<select  data-placeholder="Choose categories..." class="chosen-select" name="cplc_include_categories_el[]" multiple >
  					<?php foreach(CPLC_DB_Utils::get_all_product_categories() as $cat): ?>
 						<option <?php echo in_array($cat->term_id, $cplc_include_categories_el) ? 'SELECTED' : ''; ?>  value="<?php echo $cat->term_id; ?>"><?php echo $cat->name; ?></option>
 					<?php endforeach; ?>

@@ -129,8 +129,8 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 
 		add_submenu_page( 
 							'woocommerce', 
-							$page_title 	= __("Loan Calculator", CPLC_CHMG_TEXT_DOMAIN), 
-							$menu_title 	= __("Loan Calculator", CPLC_CHMG_TEXT_DOMAIN) , 
+							$page_title 	= __("PayBright Loan Calculator", CPLC_CHMG_TEXT_DOMAIN), 
+							$menu_title 	= __(" Loan Calculator", CPLC_CHMG_TEXT_DOMAIN) , 
 							$capability		= 'manage_options', 
 							$menu_slug		= $this->plugin_name, 
 							$function		= [$this, 'cplc_loan_calculator_menu_cb']);

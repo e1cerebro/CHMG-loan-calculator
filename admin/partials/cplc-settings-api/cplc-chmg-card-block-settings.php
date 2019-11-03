@@ -52,6 +52,16 @@ class CPLCCardBlockSettings{
 		);
 		register_setting( $this->plugin_name."-card_block", 'cplc_card_block_total_amount_el');
 		
+		/* Show the close icon */
+		add_settings_field(
+			'cplc_card_block_close_icon_el',
+			__( 'Close Icon', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_card_block_close_icon_cb'],
+			$this->plugin_name."-card_block",
+			'cplc_general_card_block_section'
+		);
+		register_setting( $this->plugin_name."-card_block", 'cplc_card_block_close_icon_el');
+		
 	 }
 	 
 	 	/* ---------- START CARD BLOCK HTML FIELDS --------------- */
@@ -82,6 +92,14 @@ class CPLCCardBlockSettings{
 			<div class="ui input">
 				<input type="text" name="cplc_card_block_total_amount_el"   placeholder="Enter title for total payment" value="<?php echo $cplc_card_block_total_amount_el; ?>">
 			</div>
+		
+			<?php
+		}
+
+		public function cplc_card_block_close_icon_cb(){
+			$cplc_card_block_close_icon_el =  get_option('cplc_card_block_close_icon_el');
+			?>
+			<label for="cplc_card_block_close_icon_el"><input name="cplc_card_block_close_icon_el" type="checkbox" id="cplc_card_block_close_icon_el" value="1" <?php echo '1' == $cplc_card_block_close_icon_el ? 'checked' : ''; ?>> Enable the close icon on the result card</label>
 		
 			<?php
 		}

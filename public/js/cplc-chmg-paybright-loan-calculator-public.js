@@ -2,6 +2,12 @@
 var animation_delay = 300;
 jQuery(document).ready(function($) {
 
+    
+
+    jQuery(".chosen-select").chosen({no_results_text: "Oops, nothing found!", allow_single_deselect: true}).change();
+
+
+ 
     //Give the input field focus when the page loads
     jQuery('#cplc-amount-input').focus();
 
@@ -58,8 +64,7 @@ jQuery(document).ready(function($) {
             setTimeout(function(){ 
                 validation_passed();
                 loan_amount = get_estimated_loan_amount(input_amount);
-                console.log("Typed Amount: ", input_amount);
-                console.log("Returned Loan Amount: ", loan_amount);
+                 
                 calculate_interest_rate(loan_amount);
             
             }, 1500);
@@ -83,7 +88,8 @@ jQuery(document).ready(function($) {
         var minimum_amount_error = "Please enter an amount larger than or equal to $" + minimum_approved_value;
         
         validation_failed(minimum_amount_error);
-        console.log(input_amount);
+      
+        
         setTimeout(function(){ 
             if (input_amount >= minimum_approved_value ) {
                 jQuery('#cplc-hidden-amount').html(input_amount);
@@ -157,7 +163,7 @@ function calculate_interest_rate(loan_amount) {
     //get the available loan term and interest rates offered
     var cplc_available_loan_term_el = cplc_vars.cplc_available_loan_term_el;
     var cplc_available_interest_rates_el = cplc_vars.cplc_available_interest_rates_el;
-console.log(cplc_available_loan_term_el);
+
     //convert the values to array
     var available_months = cplc_available_loan_term_el;
     var available_rates = cplc_available_interest_rates_el.split(",")
@@ -211,10 +217,13 @@ console.log(cplc_available_loan_term_el);
             var cplc_card_block_interest_rate_el = cplc_vars.cplc_card_block_interest_rate_el;
             var cplc_card_block_interest_amount_el = cplc_vars.cplc_card_block_interest_amount_el;
             var cplc_card_block_total_amount_el = cplc_vars.cplc_card_block_total_amount_el;
+            var cplc_card_block_close_icon_el = cplc_vars.cplc_card_block_close_icon_el;
 
             htmlOutput += "<div class='cplc-summary-block .cplc-mb-medium'>";
-            htmlOutput += "<div class='cplc-close'><span>&times;</span></div>";
 
+            if('1' == cplc_card_block_close_icon_el){
+                htmlOutput += "<div class='cplc-close'><span>&times;</span></div>";
+            }
             htmlOutput += "<div class='cplc-summary-block_header'>";
             htmlOutput += "<div class='cplc-summary-block_header_monthly_pay'><span class='cplc-monthly-amount " + text_color + "'>" + formatCurrency(pay_per_month) + "</span><span class='cplc-month " + text_color + "'>/month</span></div>";
             htmlOutput += "<div class='cplc-summary-block_header_month " + bg_color + "'><span>" + loan_term + " months</span></div>";

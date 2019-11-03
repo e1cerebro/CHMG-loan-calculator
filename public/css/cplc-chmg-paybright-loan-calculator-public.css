@@ -164,6 +164,7 @@ button#cplc-launch-prequalify-modal:hover {
     display: flex;
     flex-direction: row;
     margin: 0 auto 20px;
+    width: 60%;
 }
 
 .cplc-input-field input#cplc-amount-input {
