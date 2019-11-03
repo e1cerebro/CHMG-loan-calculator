@@ -2,7 +2,7 @@
 
 //include_once( CPLC_ROOT_PATH.'cplc-custom-utils/cplc-db-utils.php' );
 
-require_once plugin_dir_path( __FILE__ ).'../cplc-custom-utils/cplc-db-utils.php';
+require_once plugin_dir_path( __FILE__ ).'../../includes/cplc-custom-utils/cplc-db-utils.php';
 
 add_shortcode('cplc_show_calculator', 'cplc_show_calculator_cb');
 
@@ -55,7 +55,7 @@ function cplc_show_calculator_cb($attr){
                 <?php
                  //print_r(CPLC_DB_Utils::get_products());
 
-                 $cplc_all_product = CPLC_DB_Utils::get_products();
+                 $cplc_all_product = CPLC_DB_Utils::get_product_from_cat()->posts;
 
                 // print_r(CPLC_DB_Utils::get_products_variations(8336));
                  ?>
@@ -118,11 +118,10 @@ function cplc_show_calculator_cb($attr){
 
             
             <div id="cplc-results" class="cplc-mb-medium">
-                  <div class="cplc-summary-block">
+                <!-- <div class="cplc-summary-block">
                     <div class="cplc-summary-block_header">
                         <div class="cplc-summary-block_header_monthly_pay"><span class="cplc-monthly-amount">1000</span><span class="cplc-month">/month</span></div>
                         <div class="cplc-summary-block_header_month"><span>6 months</span></div>
-                        <div class="cplc-close"><span>X</span></div>
                     </div>
 
                     <div class='cplc-summary-block_body'>
@@ -130,7 +129,7 @@ function cplc_show_calculator_cb($attr){
                         <div class='cplc-summary-block_body_interest_amount'><h5>Interest Amount</h5><p>0.00%</p></div>
                         <div class='cplc-summary-block_body_total_payment'><h5>Total Payment</h5><p>$3,000.00</p></div>
                      </div>
-                </div>  
+                </div> -->
             </div>
 
             <div id="cplc-error-messages" class="cplc-mb-medium"></div>

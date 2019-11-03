@@ -1,5 +1,5 @@
 <?php
-
+require plugin_dir_path( __FILE__ ).'../includes/cplc-custom-utils/cplc-db-utils.php';
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -74,10 +74,11 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-loan-calculator-admin.css', array(), $this->version, 'all' );
-
 		
 		if($hook_suffix == 'toplevel_page_cplc-chmg-paybright-loan-calculator') {
 			wp_enqueue_style( $this->plugin_name."-semantic-ui-css", plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-semantic-ui.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name."-chosen-css", "https://harvesthq.github.io/chosen/chosen.css", array(), '', 'all' );
+
 		}
 	}
 
@@ -105,7 +106,8 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
  
 		  if($hook_suffix == 'toplevel_page_cplc-chmg-paybright-loan-calculator') {
 			 wp_enqueue_script( $this->plugin_name."-semantic-ui-js", plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-semantic-ui.js', array("jquery" ), '', true );
-			 
+			 wp_enqueue_script( $this->plugin_name."-chosen","//harvesthq.github.io/chosen/chosen.jquery.js", '', true );
+
 			 wp_enqueue_media();
 			 wp_register_script( $this->plugin_name.'-img-uploader', plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-uploader.js', array('jquery'), time());
 		  	 wp_enqueue_script($this->plugin_name.'-img-uploader');
@@ -208,6 +210,34 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 			'cplc_general_section'
  		);
 		register_setting( $this->plugin_name, 'cplc_available_interest_rates_el');
+
+	/*========= PRODUCT SECTION ========= */
+		add_settings_section(
+			'cplc_product_settings_section',
+			__( 'Product Settings', CPLC_CHMG_TEXT_DOMAIN ),
+			[$this, 'cplc_general_settings_section_cb' ],
+			$this->plugin_name
+		);
+
+		/* insurance company logo */
+		add_settings_field(
+			'cplc_include_categories_el',
+			__( 'Include Categories', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_include_categories_cb'],
+			$this->plugin_name,
+			'cplc_product_settings_section'
+		);
+		register_setting( $this->plugin_name, 'cplc_include_categories_el');
+
+
+
+
+
+
+
+
+
+	/*========= END PRODUCT SECTION ========= */
 
 
 	/*========= HEADING SECTION ========= */
@@ -330,6 +360,26 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 	/* Callback function for the settings sections */
 	public function cplc_general_settings_section_cb(){
 
+	}
+
+	public function cplc_include_categories_cb(){
+		$cplc_include_categories_el =  get_option('cplc_include_categories_el');
+		
+
+		?>
+			<div class="ui input">
+				<select  data-placeholder="Choose categories..." name="cplc_include_categories_el[]" multiple class="chosen-select">
+					<option value="All" >All Categories</option>
+					<?php foreach(CPLC_DB_Utils::get_all_product_categories() as $cat): ?>
+						<option <?php echo in_array($cat->term_id, $cplc_include_categories_el) ? 'SELECTED' : ''; ?>  value="<?php echo $cat->term_id; ?>"><?php echo $cat->name; ?></option>
+					<?php endforeach; ?>
+				</select>
+
+			</div>
+			<p class="description"><?php _e('Choose products categories to display', CPLC_CHMG_TEXT_DOMAIN) ?></p>
+
+		<?php
+		
 	}
 
 	public function cplc_chmg_additional_fee_cb(){

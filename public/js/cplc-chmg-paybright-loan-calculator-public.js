@@ -1,8 +1,13 @@
+ 
 var animation_delay = 300;
 jQuery(document).ready(function($) {
 
     jQuery('#cplc-amount-input').focus();
-
+   
+    jQuery(document).on('swipeleft', '.cplc-summary-block', function(){
+        console.log("swipped");
+    });
+    
     jQuery(document).on('click', '.cplc-close', function(){
         jQuery(this).parent().fadeOut( 300, function() {
             var visible_blocks = jQuery('.cplc-summary-block:visible').length;
@@ -11,9 +16,7 @@ jQuery(document).ready(function($) {
                 validation_failed('');
                 jQuery('#cplc-amount-input').val('');
                 jQuery('#cplc-loading-shimmer').css('display', 'none');
-                
-               
-                
+
             }else{
                 validation_passed();
             }
@@ -176,15 +179,15 @@ function calculate_interest_rate(loan_amount) {
             if (interest_rate == 0) {
 
                 var result = (loan_amount / loan_term);
-                var Finalresult = result.toFixed(2);
+                var Finalresult = result.toFixed(0);
 
             } else {
                 var newinterestrate = interest_rate / 12;
                 var result = ((loan_amount * (newinterestrate / 100) * Math.pow((1 + (newinterestrate / 100)), loan_term)) / ((Math.pow((1 + (newinterestrate / 100)), loan_term)) - 1));
-                var Finalresult = result.toFixed(2);
+                var Finalresult = result.toFixed(0);
             }
 
-            interest_rate_value = parseFloat(interest_rate).toFixed(2);
+            interest_rate_value = parseFloat(interest_rate).toFixed(0);
             pay_per_month = Finalresult;
             total_payment_addition = parseFloat(pay_per_month) * loan_term;
             total_payment = total_payment_addition.toFixed(0)

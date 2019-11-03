@@ -74,6 +74,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-loan-calculator-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name."-select2-css", plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-loan-calculator-select2.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -97,6 +98,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name."-select2-js", plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-public-select2.js', array( 'jquery' ), $this->version, false );
 
 		wp_localize_script($this->plugin_name, 
 							'cplc_vars',
