@@ -114,6 +114,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 									'cplc_card_block_interest_amount_el' => get_option('cplc_card_block_interest_amount_el'),
 									'cplc_card_block_total_amount_el' => get_option('cplc_card_block_total_amount_el'),
 									'cplc_card_block_close_icon_el' => get_option('cplc_card_block_close_icon_el'),
+									'cplc_paybright_public_key_el' => get_option('cplc_paybright_public_key_el'),
  								]
 							);
 

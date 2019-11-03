@@ -81,6 +81,16 @@ class CplcLoanSettings{
  		);
 		register_setting( $this->plugin_name."-loan_options", 'cplc_available_interest_rates_el');
 
+		/* Available Interest rates */
+		add_settings_field(
+			'cplc_paybright_public_key_el',
+			__( 'PayBright Public Key', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_paybright_public_key_cb'],
+			$this->plugin_name."-loan_options",
+			'cplc_general_section'
+ 		);
+		register_setting( $this->plugin_name."-loan_options", 'cplc_paybright_public_key_el');
+
      }
 
 
@@ -180,4 +190,19 @@ class CplcLoanSettings{
 		<?php
 		
 	}
+
+	public function cplc_paybright_public_key_cb(){
+		$cplc_paybright_public_key_el =  get_option('cplc_paybright_public_key_el');
+		?>
+
+			 <div class="ui input">
+			 <input type="text" name="cplc_paybright_public_key_el" placeholder="Enter API key" value="<?php echo $cplc_paybright_public_key_el; ?>">
+			</div>
+			<p class="description"><?php _e('Enter the paybright public API key', CPLC_CHMG_TEXT_DOMAIN) ?></p>
+
+		<?php
+		
+	}
+
+
 }

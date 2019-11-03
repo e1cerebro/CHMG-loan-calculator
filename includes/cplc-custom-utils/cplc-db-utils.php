@@ -28,7 +28,7 @@
                 'tax_query'             => array(
                     array(
                         'taxonomy'      => 'product_cat',
-                        'field' => 'term_id', //This is optional, as it defaults to 'term_id'
+                        'field'         => 'term_id', //This is optional, as it defaults to 'term_id'
                         'terms'         => $include_cat,
                         'operator'      => 'IN' // Possible values are 'IN', 'NOT IN', 'AND'.
                     ) 

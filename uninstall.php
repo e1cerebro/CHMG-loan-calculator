@@ -26,6 +26,20 @@
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
-}
+	if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+		exit;
+	}
+
+ 	delete_option('cplc_chmg_loan_amount_input_el');
+	delete_option('cplc_chmg_additional_fee_el');
+	delete_option('cplc_calculation_method_el');
+	delete_option('cplc_minimum_approved_amount_el');
+	delete_option('cplc_available_interest_rates_el');
+	delete_option('cplc_header_title_el');
+	delete_option('cplc_header_sub_title_el');
+	delete_option('cplc_form_heading_el');
+	delete_option('cplc_form_sub_heading_el');
+	delete_option('cplc_form_button_text_el');
+	delete_option('cplc_form_qualify_button_sub_text_el');
+	delete_option('cplc_footer_message_el');
+	delete_option('cplc_card_block_close_icon_el');

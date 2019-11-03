@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
                 validation_passed();
                 loan_amount = get_estimated_loan_amount(input_amount);
                  
-                calculate_interest_rate(loan_amount);
+                calculate_interest_rate(loan_amount.toFixed(0));
             
             }, 1500);
 
@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
                 jQuery('#cplc-hidden-amount').html(input_amount);
                 validation_passed();
                 loan_amount = get_estimated_loan_amount(input_amount);
-                calculate_interest_rate(loan_amount);
+                calculate_interest_rate(loan_amount.toFixed(0));
             } else {
                 validation_failed(minimum_amount_error);
             }
@@ -109,7 +109,7 @@ jQuery(document).ready(function($) {
 
         var input_amount = parseFloat($('#cplc-hidden-amount').html());
         loan_amount = get_estimated_loan_amount(input_amount);
-        var cplc_paybright_api = "6ehgkT9K1KvH137bZdjQNXFCG4KeXWLXNxaUm4gPdWK3bhPHD7";
+        var cplc_paybright_api = cplc_vars.cplc_paybright_public_key_el;
         var cplc_src = "https://app.paybright.com/Payments/PreApproval/Preapproval_v2.aspx?public_key="+cplc_paybright_api+"&purchase_amount="+loan_amount;
 
         document.getElementById("pb_iframe").src = cplc_src;
@@ -202,11 +202,19 @@ function calculate_interest_rate(loan_amount) {
             total_payment_addition = parseFloat(pay_per_month) * loan_term;
 
             //fix the total loan term pay to zero decimal places
-            total_payment = total_payment_addition.toFixed(0)
+            total_payment = total_payment_addition.toFixed(0);
 
+ 
             //additional cost apart from the cost of the product
-            additional_interest_amount = (total_payment - loan_amount).toFixed(0);
-           
+            additional_interest_amount = (total_payment - loan_amount).toFixed(2);
+
+           /* console.log('Current Month: ', loan_term, ' months');
+           console.log('Interest Rate: ', interest_rate, ' %');
+
+           console.log('total_payment: ', total_payment);
+           console.log('loan_amount: ', loan_amount);
+           console.log('loan_amount: ', total_payment - loan_amount); */
+
 
             var htmlOutput = '';
 
@@ -222,7 +230,7 @@ function calculate_interest_rate(loan_amount) {
             htmlOutput += "<div class='cplc-summary-block .cplc-mb-medium'>";
 
             if('1' == cplc_card_block_close_icon_el){
-                htmlOutput += "<div class='cplc-close'><span>&times;</span></div>";
+                htmlOutput += "<div class='cplc-close'><span class='cplc-close-icon'>&times;</span></div>";
             }
             htmlOutput += "<div class='cplc-summary-block_header'>";
             htmlOutput += "<div class='cplc-summary-block_header_monthly_pay'><span class='cplc-monthly-amount " + text_color + "'>" + formatCurrency(pay_per_month) + "</span><span class='cplc-month " + text_color + "'>/month</span></div>";

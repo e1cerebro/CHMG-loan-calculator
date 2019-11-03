@@ -52,7 +52,7 @@ function cplc_show_calculator_cb($attr){
                              <input type="text" name="cplc-loan-amount" placeholder="Loan Amount" id="cplc-amount-input" class="cplc-amount-input"/>
                 <?php elseif('select'): ?>            
                            
-                <?php $cplc_all_product = CPLC_DB_Utils::get_product_from_cat()->posts;   ?>
+                <?php $cplc_all_product = !empty(get_option('cplc_include_categories_el')) ?  CPLC_DB_Utils::get_product_from_cat()->posts : CPLC_DB_Utils::get_products();   ?>
                              
                     <select data-placeholder="Choose categories..." class="chosen-select" name="cplc-loan-amount_select" id="cplc-amount-select">
 
