@@ -34,6 +34,7 @@
         <a href="?page=cplc-chmg-paybright-loan-calculator&tab=cplc_form_main" class="nav-tab <?php echo $active_tab == 'cplc_form_main' ? 'nav-tab-active' : ''; ?>">Form Main</a>
         <a href="?page=cplc-chmg-paybright-loan-calculator&tab=cplc_card_block" class="nav-tab <?php echo $active_tab == 'cplc_card_block' ? 'nav-tab-active' : ''; ?>">Card Block</a>
         <a href="?page=cplc-chmg-paybright-loan-calculator&tab=cplc_form_footer" class="nav-tab <?php echo $active_tab == 'cplc_form_footer' ? 'nav-tab-active' : ''; ?>">Form Footer</a>
+        <a href="?page=cplc-chmg-paybright-loan-calculator&tab=cplc_advanced_financing" class="nav-tab <?php echo $active_tab == 'cplc_advanced_financing' ? 'nav-tab-active' : ''; ?>">Advanced Settings</a>
 
     </h2>
 
@@ -62,6 +63,9 @@
             }else if( $active_tab == 'cplc_card_block'){
                 settings_fields($this->plugin_name."-card_block");
                 do_settings_sections($this->plugin_name."-card_block");
+            }else if( $active_tab == 'cplc_advanced_financing'){
+                settings_fields($this->plugin_name."-cplc_advanced_financing");
+                do_settings_sections($this->plugin_name."-cplc_advanced_financing");
             }
 
             submit_button(); 

@@ -59,7 +59,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles($hook_suffix) {
+	public function cplc_enqueue_styles($hook_suffix) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,9 +73,10 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-loan-calculator-admin.css', array(), $this->version, 'all' );
 		
 		if(strpos($hook_suffix, 'woocommerce_page_cplc-chmg-paybright-loan-calculator') !== false) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-loan-calculator-admin.css', array(), $this->version, 'all' );
+
 			//wp_enqueue_style( $this->plugin_name."-semantic-ui-css", plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-semantic-ui.css', array(), $this->version, 'all' );
 			wp_enqueue_style( $this->plugin_name."-chosen-css", "https://harvesthq.github.io/chosen/chosen.css", array(), '', 'all' );
 
@@ -87,7 +88,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts($hook_suffix) {
+	public function cplc_enqueue_scripts($hook_suffix) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -102,19 +103,18 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 		 */
 
 		  //wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-admin.js', array( 'jquery' ), $this->version, false );
-		  wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-admin.js', array( 'jquery' ), time(), false );
-  
+		 
 		  if(strpos($hook_suffix, 'woocommerce_page_cplc-chmg-paybright-loan-calculator') !== false) {
  			 
-			
+			 wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-admin.js', array( 'jquery' ), $this->version, false );
+  
 			  
 			 wp_enqueue_script( $this->plugin_name."-chosen","//harvesthq.github.io/chosen/chosen.jquery.js", '', true );
 
 			 wp_enqueue_media();
 			 wp_register_script( $this->plugin_name.'-img-uploader', plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-uploader.js', array('jquery'), time());
 		  	 wp_enqueue_script($this->plugin_name.'-img-uploader');
- 		  }  
-
+ 		  } 
 	}
 
 
@@ -198,6 +198,15 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 		$form_footer_settings->register_fields();
 
 	/* ------------------- END FOOTER SECTION ------------------- */
+
+	/* ------------------- Advanced Financing SECTION -------------------- */
+		include_once( 'partials/cplc-settings-api/cplc-chmg-form-advanced-financing-settings.php' );
+
+		$cplc_advanced_financing = new CPLCAdvancedFinancingSettings($this->plugin_name);
+		$cplc_advanced_financing->register_section();
+		$cplc_advanced_financing->register_fields();
+
+	/* ------------------- END Advanced Financing SECTION ------------------- */
 
 
 	}

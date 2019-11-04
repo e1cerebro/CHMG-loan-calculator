@@ -154,14 +154,17 @@ class Cplc_Chmg_Paybright_Loan_Calculator {
 
 		$plugin_admin = new Cplc_Chmg_Paybright_Loan_Calculator_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'cplc_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'cplc_enqueue_scripts' );
 
 		/* Adding the admin menu */
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'cplc_admin_menu' );
 
 		/* Adding Settings */
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'cplc_settings_options' );
+
+
+	
 	}
 
 	/**
@@ -177,6 +180,17 @@ class Cplc_Chmg_Paybright_Loan_Calculator {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		$this->loader->add_filter( 'woocommerce_get_price_html',  $plugin_public, 'cplc_change_product_price_display' );
+		$this->loader->add_filter( 'woocommerce_cart_item_price',  $plugin_public,'cplc_change_product_price_display' );
+		
+		$cplc_fin_button_position = get_option('cplc_financing_button_position_el');
+		
+		if('above' == $cplc_fin_button_position){
+			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $plugin_public, 'cplc_pb_finance_now_launch', 1);
+		}else{
+			$this->loader->add_action( 'woocommerce_after_add_to_cart_form', $plugin_public, 'cplc_pb_finance_now_launch', 1);
+		}
 
 	}
 
