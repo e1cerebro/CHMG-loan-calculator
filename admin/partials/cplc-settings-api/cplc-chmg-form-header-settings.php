@@ -55,7 +55,8 @@ class CPLCFormHeaderSettings{
 		$cplc_financing_company_logo_el =  get_option('cplc_financing_company_logo_el'); 
 	?>
 	   <input id="background_image" type="hidden" name="<?php echo 'cplc_financing_company_logo_el'; ?>" value="<?php echo get_option('cplc_financing_company_logo_el'); ?>" />
-	   <input id="upload_image_button" type="button" class="button-primary" value="Upload Image" />
+	   <input id="upload_image_button" type="button" class="button-primary" value="Upload Logo" />
+	   <input id="remove_image_button" type="button" class="button-secondary" value="Remove Logo" />
 	   <p><img width="140" src="<?php  echo $cplc_financing_company_logo_el; ?>"   alt="loading-animation" id="cplc-loading-animation"></p>
 	   <p class="description"><?php _e('Choose the loading animation image here.', 'wpr') ?></p>
 

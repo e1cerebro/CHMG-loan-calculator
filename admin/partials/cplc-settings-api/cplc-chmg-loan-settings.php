@@ -164,11 +164,11 @@ class CplcLoanSettings{
 		?>
 			 <div class="ui form">
 				<select  data-placeholder="Choose loan term..." name="cplc_available_loan_term_el[]" multiple class="chosen-select">
-					<option <?php echo in_array(3, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="3" >3 Months</option>
-					<option <?php echo in_array(6, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="6" >6 Months</option>
-					<option <?php echo in_array(12, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="12" >12 Months</option>
-					<option <?php echo in_array(18, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="18" >18 Months</option>
-					<option <?php echo in_array(24, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="24" >24 Months</option>
+					<option <?php echo @in_array(3, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="3" >3 Months</option>
+					<option <?php echo @in_array(6, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="6" >6 Months</option>
+					<option <?php echo @in_array(12, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="12" >12 Months</option>
+					<option <?php echo @in_array(18, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="18" >18 Months</option>
+					<option <?php echo @in_array(24, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="24" >24 Months</option>
  				</select>
 			 </div>	
  

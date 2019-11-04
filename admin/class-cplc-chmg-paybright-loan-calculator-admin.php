@@ -75,7 +75,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-loan-calculator-admin.css', array(), $this->version, 'all' );
 		
-		if($hook_suffix == 'toplevel_page_cplc-chmg-paybright-loan-calculator') {
+		if(strpos($hook_suffix, 'woocommerce_page_cplc-chmg-paybright-loan-calculator') !== false) {
 			//wp_enqueue_style( $this->plugin_name."-semantic-ui-css", plugin_dir_url( __FILE__ ) . 'css/cplc-chmg-paybright-semantic-ui.css', array(), $this->version, 'all' );
 			wp_enqueue_style( $this->plugin_name."-chosen-css", "https://harvesthq.github.io/chosen/chosen.css", array(), '', 'all' );
 
@@ -103,9 +103,11 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 
 		  //wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-admin.js', array( 'jquery' ), $this->version, false );
 		  wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-loan-calculator-admin.js', array( 'jquery' ), time(), false );
- 
-		  if($hook_suffix == 'toplevel_page_cplc-chmg-paybright-loan-calculator') {
-			 //wp_enqueue_script( $this->plugin_name."-semantic-ui-js", plugin_dir_url( __FILE__ ) . 'js/cplc-chmg-paybright-semantic-ui.js', array("jquery" ), '', true );
+  
+		  if(strpos($hook_suffix, 'woocommerce_page_cplc-chmg-paybright-loan-calculator') !== false) {
+ 			 
+			
+			  
 			 wp_enqueue_script( $this->plugin_name."-chosen","//harvesthq.github.io/chosen/chosen.jquery.js", '', true );
 
 			 wp_enqueue_media();

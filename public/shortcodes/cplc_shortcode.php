@@ -10,46 +10,73 @@ add_shortcode('cplc_show_calculator', 'cplc_show_calculator_cb');
 
 function cplc_show_calculator_cb($attr){
     extract(shortcode_atts(array(
-                
+                 'cplc_show_logo'       => '',  
+                 'cplc_show_header_title' => '',  
+                 'cplc_show_header_sub_title' => '',  
+                 'cplc_show_form_title' => '',  
+                 'cplc_show_form_sub_title' => '',  
+                 'cplc_form_qualify_button_sub_text' => '',  
+                 'cplc_footer_message' => '',  
         ), $attr));
 
         ob_start();
 ?>
- 
+  
 
 
         <div class="cplc-container cplc-loan-calculator">
+
+        <!-- Start header section -->
             <div class="cplc-header-section">
+                    <?php if('yes' == $cplc_show_logo || empty($cplc_show_logo)): ?>
+                        <?php if(strlen(get_option('cplc_financing_company_logo_el')) > 0): ?>   
+                                <div class="cplc-logo"><img src="<?php echo esc_attr(get_option('cplc_financing_company_logo_el'), CPLC_CHMG_TEXT_DOMAIN); ?>" height="auto" width="250px"/></div>
+                        <?php endif; ?>  
+                    <?php endif; ?> 
+                    <!-- Header title -->
+                    <div class="cplc-heading-text">
+                    <?php if('yes' == $cplc_show_header_title || empty($cplc_show_header_title)): ?>
+                        <?php if(!empty(get_option('cplc_header_title_el'))): ?>
+                            <span class="cplc-text-center cplc-header-title"><?php echo  _e(get_option('cplc_header_title_el'), CPLC_CHMG_TEXT_DOMAIN); ?></span>
+                        <?php endif; ?>
+                    <?php endif; ?> 
 
-             <?php if(strlen(get_option('cplc_financing_company_logo_el')) > 0): ?>   
-            <div class="cplc-logo"><img src="<?php echo esc_attr(get_option('cplc_financing_company_logo_el'), CPLC_CHMG_TEXT_DOMAIN); ?>" height="auto" width="250px"/></div>
-            <?php endif; ?>   
-            <div class="cplc-heading-text">
-
-                    <?php if(!empty(get_option('cplc_header_title_el'))): ?>
-                     <h3 class="cplc-text-center"><?php echo esc_attr(get_option('cplc_header_title_el'), CPLC_CHMG_TEXT_DOMAIN); ?></h3>
+                    <!-- Header Sub title -->
+                    <?php if('yes' == $cplc_show_header_sub_title || empty($cplc_show_header_sub_title)): ?>
+                        <?php if(!empty(get_option('cplc_header_sub_title_el'))): ?>
+                        <span class="cplc-text-center cplc-header-sub-title "><?php echo _e(get_option('cplc_header_sub_title_el'), CPLC_CHMG_TEXT_DOMAIN); ?></span>
+                        <?php endif; ?>
                     <?php endif; ?>
-
-                    <?php if(!empty(get_option('cplc_header_sub_title_el'))): ?>
-                    <p class="cplc-text-center"><?php echo esc_attr(get_option('cplc_header_sub_title_el'), CPLC_CHMG_TEXT_DOMAIN); ?></p>
-                    <?php endif; ?>
-                </div>
-
+            </div>
+        <!-- End header section -->
                 <!-- Body Section -->
             <div class="cplc-body-section">
                 <div class="cplc-input-text">
-                    <?php if(!empty(get_option('cplc_form_heading_el'))): ?>
-                    <h4><?php echo esc_attr( get_option('cplc_form_heading_el'), CPLC_CHMG_TEXT_DOMAIN ); ?></h4>
+                
+                <!-- Form Title -->
+                    <?php if('yes' == $cplc_show_form_title || empty($cplc_show_form_title)): ?>
+                        <?php if(!empty(get_option('cplc_form_heading_el'))): ?>
+                        <span class="cplc-form-heading">
+                                <?php echo _e( get_option('cplc_form_heading_el'), CPLC_CHMG_TEXT_DOMAIN ); ?> 
+                        </span>
+                        <?php endif; ?>
                     <?php endif; ?>
-                    <?php if(!empty(get_option('cplc_form_sub_heading_el'))): ?>
-                    <p><?php echo esc_attr(  get_option('cplc_form_sub_heading_el'), CPLC_CHMG_TEXT_DOMAIN ); ?></p>
+
+                    <!-- Form Subtitle -->
+                    <?php if('yes' == $cplc_show_form_sub_title || empty($cplc_show_form_sub_title)): ?>
+                        <?php if(!empty(get_option('cplc_form_sub_heading_el'))): ?>
+                        <span class="cplc-form-sub-heading">
+                            <?php echo _e(  get_option('cplc_form_sub_heading_el'), CPLC_CHMG_TEXT_DOMAIN ); ?>
+                        </span>
+                        <?php endif; ?>
                     <?php endif; ?>
+
                 </div>
                 <div class="cplc-input-field">
                              
                 <?php if( 'input' == get_option('cplc_chmg_loan_amount_input_el')): ?>
                             <!-- <label for="cplc-loan-amount" class="cplc-label">See how you can split</label> -->
-                             <input type="text" name="cplc-loan-amount" placeholder="Loan Amount" id="cplc-amount-input" class="cplc-amount-input"/>
+                             <input type="text" name="cplc-loan-amount" placeholder="<?php echo _e(  get_option('cplc_form_placeholder_text_el'), CPLC_CHMG_TEXT_DOMAIN ); ?>" id="cplc-amount-input" class="cplc-amount-input"/>
                 <?php elseif('select'): ?>            
                            
                 <?php $cplc_all_product = !empty(get_option('cplc_include_categories_el')) ?  CPLC_DB_Utils::get_product_from_cat()->posts : CPLC_DB_Utils::get_products();   ?>
@@ -176,17 +203,23 @@ function cplc_show_calculator_cb($attr){
 
             <div class="cplc-footer-section">
                 <div class="cplc-footer-button">
-                    <button id="cplc-launch-prequalify-modal"><?php echo esc_attr( get_option('cplc_form_button_text_el'), CPLC_CHMG_TEXT_DOMAIN ); ?></button>
-                    <?php if(!empty(get_option('cplc_form_qualify_button_sub_text_el'))): ?>
-                    <p class="cplc-small-text cplc-mt-small"><?php echo esc_attr(get_option('cplc_form_qualify_button_sub_text_el'), CPLC_CHMG_TEXT_DOMAIN) ;?></p>
+                    <button id="cplc-launch-prequalify-modal" class="cplc-mb-small"><?php echo esc_attr( get_option('cplc_form_button_text_el'), CPLC_CHMG_TEXT_DOMAIN ); ?></button>
+                   
+                    <?php if('yes' == $cplc_form_qualify_button_sub_text || empty($cplc_form_qualify_button_sub_text)): ?>
+                        <?php if(!empty(get_option('cplc_form_qualify_button_sub_text_el'))): ?>
+                        <span class="cplc-small-text cplc-mt-small cplc-form-qualify-button-sub-text"><?php echo _e(get_option('cplc_form_qualify_button_sub_text_el'), CPLC_CHMG_TEXT_DOMAIN) ;?></span>
+                        <?php endif ?>
                     <?php endif ?>
                 </div>
 
-                <div class="cplc-footer-sub-text">
-                    <?php if(!empty(get_option('cplc_footer_message_el'))) :?>
-                    <p class="cplc-small-text"><?php echo esc_attr(get_option('cplc_footer_message_el'), CPLC_CHMG_TEXT_DOMAIN); ?></p>
-                    <?php endif; ?>
-                </div>
+                <?php if('yes' == $cplc_footer_message || empty($cplc_footer_message)): ?>
+                    <div class="cplc-footer-sub-text">
+                    
+                        <?php if(!empty(get_option('cplc_footer_message_el'))) :?>
+                        <span class="cplc-small-text cplc-footer-message"><?php echo _e(get_option('cplc_footer_message_el'), CPLC_CHMG_TEXT_DOMAIN); ?></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif ?>
             </div>
 
         </div>

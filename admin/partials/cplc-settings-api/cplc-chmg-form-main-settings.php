@@ -39,6 +39,17 @@ class CPLCFormMainSettings{
 		register_setting( $this->plugin_name."-form_main", 'cplc_form_sub_heading_el');
 		
 		
+		/* Placeholder text */
+		add_settings_field(
+			'cplc_form_placeholder_text_el',
+			__( 'Placeholder Text', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_form_placeholder_text_cb'],
+			$this->plugin_name."-form_main",
+			'cplc_general_form_section'
+ 		);
+		register_setting( $this->plugin_name."-form_main", 'cplc_form_placeholder_text_el');
+		
+		
 		/* Qualify Button text */
 		add_settings_field(
 			'cplc_form_button_text_el',
@@ -87,6 +98,18 @@ class CPLCFormMainSettings{
 			
 		}
 
+
+
+		public function cplc_form_placeholder_text_cb(){
+			$cplc_form_placeholder_text_el =  get_option('cplc_form_placeholder_text_el');
+			?>
+			<div class="ui input">
+				<input type="text" name="cplc_form_placeholder_text_el"   placeholder="Enter Placeholder text" value="<?php echo $cplc_form_placeholder_text_el; ?>">
+			</div>
+		
+			<?php
+				
+		}
 
 
 		public function cplc_form_button_text_cb(){
