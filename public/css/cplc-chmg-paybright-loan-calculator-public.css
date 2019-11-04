@@ -45,6 +45,18 @@
     margin-bottom: 34px;
 }
 
+.cplc-heading-text {
+    text-align: center;
+}
+
+.cplc-header-title,
+.cplc-header-sub-title,
+.cplc-form-heading,
+.cplc-form-sub-heading,
+.cplc-form-qualify-button-sub-text {
+    display: block;
+}
+
 .cplc-summary-block_header_month {
     background-color: #0188d0;
     padding: 1px 16px;
