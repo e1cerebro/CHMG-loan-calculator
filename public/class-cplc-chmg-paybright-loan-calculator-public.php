@@ -218,8 +218,8 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 
 			<style>
 				div#paybright-widget-container p{
- 					  display: none;  
-  			}
+					display: none;  
+				}
 			</style>
 		<?php
 
