@@ -12,7 +12,7 @@ class CPLCFormFooterSettings{
         add_settings_section(
 			'cplc_general_footer_section',
 			__( 'Footer Settings', CPLC_CHMG_TEXT_DOMAIN ),
-			[$this, 'cplc_general_settings_section_cb' ],
+			'',
 			$this->plugin_name
 		);
      }

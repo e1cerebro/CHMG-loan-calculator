@@ -31,20 +31,90 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Activator {
 	 */
 	public static function activate() {
 
-	
-		update_option('cplc_chmg_loan_amount_input_el', 'input', true);
-		update_option('cplc_chmg_additional_fee_el', '250', true);
-		update_option('cplc_calculation_method_el', 'fixed', true);
-		update_option('cplc_minimum_approved_amount_el', '300', true);
- 		update_option('cplc_available_interest_rates_el', '0, 7.95', true);
-		update_option('cplc_header_title_el', 'Pay later with PayBright', true);
-		update_option('cplc_header_sub_title_el', 'Checking your eligibility won’t affect your credit.', true);
-		update_option('cplc_form_heading_el', 'How much is your purchase?', true);
-		update_option('cplc_form_sub_heading_el', 'We’ll estimate your monthly payments.', true);
-		update_option('cplc_form_button_text_el', 'see if you qualify', true);
-		update_option('cplc_form_qualify_button_sub_text_el', 'Get a real-time decision with just 5 pieces of info.', true);
-		update_option('cplc_footer_message_el', 'Rates are between 0–30% APR, and down payment may be required. Subject to eligibility check and approval. Payment options depend on your purchase amount. The estimated payment amount excludes taxes and shipping fees. Actual terms may vary. Affirm loans are made by Cross River Bank, Member FDIC. Visit affirm.com/help for more info.', true);
-		update_option('cplc_card_block_close_icon_el', '1', true);
+		/* Loan Calculator Tab settings*/
+		if(empty(get_option('cplc_chmg_loan_amount_input_el')))
+			update_option('cplc_chmg_loan_amount_input_el', 'input', true);
+
+		if(empty(get_option('cplc_chmg_additional_fee_el')))
+			update_option('cplc_chmg_additional_fee_el', '250', true);
+		
+		if(empty(get_option('cplc_calculation_method_el')))
+			update_option('cplc_calculation_method_el', 'fixed', true);
+		
+		if(empty(get_option('cplc_minimum_approved_amount_el')))
+			update_option('cplc_minimum_approved_amount_el', '300', true);
+		
+		if(empty(get_option('cplc_available_interest_rates_el')))
+			update_option('cplc_available_interest_rates_el', '0, 7.95', true);
+
+		if(empty(get_option('cplc_available_interest_rates_el')))
+			update_option('cplc_available_interest_rates_el', '0, 7.95', true);
+
+		/* Form Heading Settings Tab */
+		if(empty(get_option('cplc_header_title_el')))
+			update_option('cplc_header_title_el', 'Pay later with PayBright', true);
+
+		if(empty(get_option('cplc_header_sub_title_el')))
+		update_option('cplc_header_sub_title_el', 'Get a real-time decision with just few pieces of info.', true);
+
+
+		/* Form Main Settings Tab */
+		if(empty(get_option('cplc_form_heading_el')))
+			update_option('cplc_form_heading_el', 'How much is your purchase?', true);
+
+		if(empty(get_option('cplc_form_sub_heading_el')))
+			update_option('cplc_form_sub_heading_el', 'We’ll estimate your monthly payments.', true);
+
+		if(empty(get_option('cplc_form_button_text_el')))
+			update_option('cplc_form_button_text_el', 'Pre-qualify Now!', true);
+
+		if(empty(get_option('cplc_form_qualify_button_sub_text_el')))
+			update_option('cplc_form_qualify_button_sub_text_el', 'Get a real-time decision with just 5 pieces of info.', true);
+
+
+		/* Card Block Main Settings Tab */
+		if(empty(get_option('cplc_card_block_interest_rate_el')))
+			update_option('cplc_card_block_interest_rate_el', 'Interest Rate', true);
+ 
+		if(empty(get_option('cplc_card_block_interest_amount_el')))
+			update_option('cplc_card_block_interest_amount_el', 'Interest Amount', true);
+ 
+		if(empty(get_option('cplc_card_block_total_amount_el')))
+			update_option('cplc_card_block_total_amount_el', 'Total Payment', true);
+		
+		if(empty(get_option('cplc_card_block_close_icon_el')))
+			update_option('cplc_card_block_close_icon_el', '1', true);
+ 
+		/* Card Block Main Settings Tab */
+		if(empty(get_option('cplc_footer_message_el')))
+ 			update_option('cplc_footer_message_el', 'Your loan terms available may depend on your personal credit profile. Some conditions apply and all transactions are subject to approval by PayBright. Loan offers may vary for customers in the province of Quebec. See paybright.com/faq for more information.', true);
+		
+		/* Financing Advanced Features Tab */
+		if(empty(get_option('cplc_enable_advanced_options_el')))
+			update_option('cplc_enable_advanced_options_el', 1 , true);
+
+		if(empty(get_option('cplc_advanced_loan_term_el')))
+			update_option('cplc_advanced_loan_term_el', 18 , true);
+
+		if(empty(get_option('cplc_default_interest_rate_el')))
+			update_option('cplc_default_interest_rate_el', 7.95 , true);
+		
+		if(empty(get_option('cplc_text_below_price_el')))	
+			update_option('cplc_text_below_price_el', 'Pay as low as _CPLC_PRICE_PER_MONTH' , true);
+		
+		if(empty(get_option('cplc_financing_button_message_el')))	
+			update_option('cplc_financing_button_message_el', 'Finance now _CPLC_PRICE_PER_MONTH ' , true);
+		
+		if(empty(get_option('cplc_financing_button_bg_color_el')))	
+			update_option('cplc_financing_button_bg_color_el', 'rgb(30, 115, 190)' , true);
+		
+		if(empty(get_option('cplc_financing_button_position_el')))	
+			update_option('cplc_financing_button_position_el', 'below' , true);
+		
+		if(empty(get_option('cplc_advanced_activate_for_single_only_el')))	
+			update_option('cplc_advanced_activate_for_single_only_el', '1' , true);
+
+
 	}
 
 }

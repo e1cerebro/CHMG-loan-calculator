@@ -30,16 +30,85 @@
 		exit;
 	}
 
- 	delete_option('cplc_chmg_loan_amount_input_el');
-	delete_option('cplc_chmg_additional_fee_el');
-	delete_option('cplc_calculation_method_el');
-	delete_option('cplc_minimum_approved_amount_el');
-	delete_option('cplc_available_interest_rates_el');
-	delete_option('cplc_header_title_el');
-	delete_option('cplc_header_sub_title_el');
-	delete_option('cplc_form_heading_el');
-	delete_option('cplc_form_sub_heading_el');
-	delete_option('cplc_form_button_text_el');
-	delete_option('cplc_form_qualify_button_sub_text_el');
-	delete_option('cplc_footer_message_el');
-	delete_option('cplc_card_block_close_icon_el');
+ 	/* Loan Calculator Tab settings*/
+	 if(!empty(get_option('cplc_chmg_loan_amount_input_el')))
+	 	delete_option('cplc_chmg_loan_amount_input_el');
+
+	if(!empty(get_option('cplc_chmg_additional_fee_el')))
+		delete_option('cplc_chmg_additional_fee_el');
+	
+	if(!empty(get_option('cplc_calculation_method_el')))
+		delete_option('cplc_calculation_method_el');
+	
+	if(!empty(get_option('cplc_minimum_approved_amount_el')))
+		delete_option('cplc_minimum_approved_amount_el');
+	
+	if(!empty(get_option('cplc_available_interest_rates_el')))
+		delete_option('cplc_available_interest_rates_el');
+
+	if(!empty(get_option('cplc_available_interest_rates_el')))
+		delete_option('cplc_available_interest_rates_el');
+
+	/* Form Heading Settings Tab */
+	if(!empty(get_option('cplc_header_title_el')))
+		delete_option('cplc_header_title_el');
+
+	if(!empty(get_option('cplc_header_sub_title_el')))
+		delete_option('cplc_header_sub_title_el');
+
+
+	/* Form Main Settings Tab */
+	if(!empty(get_option('cplc_form_heading_el')))
+		delete_option('cplc_form_heading_el');
+
+	if(!empty(get_option('cplc_form_sub_heading_el')))
+		delete_option('cplc_form_sub_heading_el');
+
+	if(!empty(get_option('cplc_form_button_text_el')))
+		delete_option('cplc_form_button_text_el');
+
+	if(!empty(get_option('cplc_form_qualify_button_sub_text_el')))
+		delete_option('cplc_form_qualify_button_sub_text_el');
+
+
+	/* Card Block Main Settings Tab */
+	if(!empty(get_option('cplc_card_block_interest_rate_el')))
+		delete_option('cplc_card_block_interest_rate_el');
+
+	if(!empty(get_option('cplc_card_block_interest_amount_el')))
+		delete_option('cplc_card_block_interest_amount_el');
+
+	if(!empty(get_option('cplc_card_block_total_amount_el')))
+		delete_option('cplc_card_block_total_amount_el');
+	
+	if(!empty(get_option('cplc_card_block_close_icon_el')))
+		delete_option('cplc_card_block_close_icon_el';
+
+	/* Card Block Main Settings Tab */
+	if(!empty(get_option('cplc_footer_message_el')))
+		delete_option('cplc_footer_message_el');
+	
+	/* Financing Advanced Features Tab */
+	if(!empty(get_option('cplc_enable_advanced_options_el')))
+		delete_option('cplc_enable_advanced_options_el');
+
+	if(!empty(get_option('cplc_advanced_loan_term_el')))
+		delete_option('cplc_advanced_loan_term_el');
+
+	if(!empty(get_option('cplc_default_interest_rate_el')))
+		delete_option('cplc_default_interest_rate_el');
+	
+	if(!empty(get_option('cplc_text_below_price_el')))	
+		delete_option('cplc_text_below_price_el');
+	
+	if(!empty(get_option('cplc_financing_button_message_el')))	
+		delete_option('cplc_financing_button_message_el');
+	
+	if(!empty(get_option('cplc_financing_button_bg_color_el')))	
+		delete_option('cplc_financing_button_bg_color_el');
+	
+	if(!empty(get_option('cplc_financing_button_position_el')))	
+		delete_option('cplc_financing_button_position_el');
+	
+	if(!empty(get_option('cplc_advanced_activate_for_single_only_el')))	
+		delete_option('cplc_advanced_activate_for_single_only_el');

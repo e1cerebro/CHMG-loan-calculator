@@ -18,7 +18,6 @@ class CPLCAdvancedFinancingSettings{
      }
 
      public function register_fields(){
-		
 
 		/* Interest Rate field */
 		add_settings_field(
@@ -28,6 +27,7 @@ class CPLCAdvancedFinancingSettings{
 			$this->plugin_name."-cplc_advanced_financing",
 			'cplc_advanced_financing_section'
 		);
+		
 		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_enable_advanced_options_el');
 		
 		/* Interest Rate field */
