@@ -1,9 +1,13 @@
  var animation_delay = 300;
  jQuery(document).ready(function($) {
 
+    jQuery(document).on('click', '#cplc-launch-prequalify-single', function() {
+        console.log('hello');
+        jQuery('#pbModal').css("display", "block");
 
+    });
 
-     jQuery(".chosen-select").chosen({ no_results_text: "Oops, nothing found!", allow_single_deselect: true }).change();
+     //jQuery(".chosen-select").chosen({ no_results_text: "Oops, nothing found!", allow_single_deselect: true }).change();
 
 
 

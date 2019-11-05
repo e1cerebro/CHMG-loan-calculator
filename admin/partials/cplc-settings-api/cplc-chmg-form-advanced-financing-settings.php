@@ -22,6 +22,16 @@ class CPLCAdvancedFinancingSettings{
 
 		/* Interest Rate field */
 		add_settings_field(
+			'cplc_enable_advanced_options_el',
+			__( 'Enable Advanced Options', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_enable_advanced_options_cb'],
+			$this->plugin_name."-cplc_advanced_financing",
+			'cplc_advanced_financing_section'
+		);
+		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_enable_advanced_options_el');
+		
+		/* Interest Rate field */
+		add_settings_field(
 			'cplc_advanced_loan_term_el',
 			__( 'Loan Term', CPLC_CHMG_TEXT_DOMAIN),
 			[ $this,'cplc_advanced_loan_term_cb'],
@@ -60,6 +70,17 @@ class CPLCAdvancedFinancingSettings{
 		);
 		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_financing_button_message_el');
 		
+
+		add_settings_field(
+			'cplc_financing_button_bg_color_el',
+			__( 'Button Background Color', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_financing_button_bg_color_cb'],
+			$this->plugin_name."-cplc_advanced_financing",
+			'cplc_advanced_financing_section'
+		);
+		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_financing_button_bg_color_el');
+		
+
 		/* Interest Rate field */
 		add_settings_field(
 			'cplc_financing_button_position_el',
@@ -86,7 +107,14 @@ class CPLCAdvancedFinancingSettings{
 	 }
 	 
 	 	/* ---------- START CARD BLOCK HTML FIELDS --------------- */
-		 public function cplc_advanced_loan_term_cb(){
+		 public function cplc_enable_advanced_options_cb(){
+			$cplc_enable_advanced_options_el =  get_option('cplc_enable_advanced_options_el');
+			?>
+			   <label for="cplc_enable_advanced_options_el"><input <?php echo '1' == $cplc_enable_advanced_options_el ? checked : ''; ?> name="cplc_enable_advanced_options_el" type="checkbox" id="cplc_enable_advanced_options_el" value="1" > Check this box to activate advanced functionality</label>
+			<?php
+		}
+
+		public function cplc_advanced_loan_term_cb(){
 			$cplc_advanced_loan_term_el =  get_option('cplc_advanced_loan_term_el');
 			?>
 			<div class="ui input">
@@ -95,6 +123,7 @@ class CPLCAdvancedFinancingSettings{
 		
 			<?php
 		}
+
 		 public function cplc_default_interest_rate_cb(){
 			$cplc_default_interest_rate_el =  get_option('cplc_default_interest_rate_el');
 			?>
@@ -109,7 +138,7 @@ class CPLCAdvancedFinancingSettings{
 			$cplc_text_below_price_el =  get_option('cplc_text_below_price_el');
 			?>
 	            <textarea rows="3" columns="25" name="cplc_text_below_price_el"><?php echo $cplc_text_below_price_el; ?></textarea>
-                <p class="description">Shortcode: _CPLC_PRICE can be used for price</p>
+                <p class="description">Shortcodes: <br/>_CPLC_PRICE can be used for price <br/>_PER_MONTH for per month(/month)</p>
 			<?php
 		}
         
@@ -117,7 +146,7 @@ class CPLCAdvancedFinancingSettings{
 			$cplc_financing_button_message_el =  get_option('cplc_financing_button_message_el');
 			?>
 	            <textarea rows="3" columns="25" name="cplc_financing_button_message_el"><?php echo $cplc_financing_button_message_el; ?></textarea>
-                <p class="description">Shortcode: _CPLC_PRICE can be used for price</p>
+                <p class="description">Shortcodes: <br/>_CPLC_PRICE can be used for price <br/>_PER_MONTH for per month(/month)</p>
 			<?php
 		}
         
@@ -128,6 +157,14 @@ class CPLCAdvancedFinancingSettings{
                     <option <?php echo ('above' == $cplc_financing_button_position_el) ? 'selected' : ''; ?> value="above">Above add to cart button </option>
                     <option <?php echo ('below' == $cplc_financing_button_position_el) ? 'selected' : ''; ?> value="below" >Below add to cart button</option> 
                 </select>
+			<?php
+		}
+        
+		 public function cplc_financing_button_bg_color_cb(){
+            $cplc_financing_button_bg_color_el =  get_option('cplc_financing_button_bg_color_el');
+ 			?>
+                 <input type="text" name="cplc_financing_button_bg_color_el" class="color-field" id="" value="<?php echo $cplc_financing_button_bg_color_el; ?>">
+		 			<p class="description"><?php _e('Background Color For The Finance Now Button.', CPLC_CHMG_TEXT_DOMAIN) ?></p> 
 			<?php
 		}
         

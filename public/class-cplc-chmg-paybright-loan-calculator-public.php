@@ -123,143 +123,158 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 	function cplc_change_product_price_display( $price ) {
 		
 		global $post;
+ 
+		 
 
-		if( '1' == get_option('cplc_advanced_activate_for_single_only_el')){
-			if(is_single()){
-				$finance_price = $this->cplc_get_lowest_price($post);
+ 			if( '1' == get_option('cplc_advanced_activate_for_single_only_el')){
+				if(is_product()){
+					
+					$lowest_price = $this->cplc_get_product_lowest_price($post);
+	
+					if($lowest_price >= get_option('cplc_minimum_approved_amount_el')){
+						$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, '.', ',' );
 			
-				$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">$'.$finance_price.'</span>', get_option('cplc_text_below_price_el')) ;
-				$price .= '<p class="cplc_financing_message">'.$cplc_message.'</p>';
-
+						$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">$'.$monthly_pay.'</span>', get_option('cplc_text_below_price_el')) ;
+						$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_per_month">/month</span>', $cplc_message) ;
+					}
+					
+				}
 			}
-		}else{
-			$finance_price = $this->cplc_get_lowest_price($post);
+			else{
+				if(is_product() || is_shop() || is_woocommerce() || is_product_category() || is_page()){
+					
+					
+					$cplc_post_type = $post->post_type;
+					
+					if('product' == $cplc_post_type){
+						$lowest_price = $this->cplc_get_product_lowest_price($post);
+					
+					 if($lowest_price >= get_option('cplc_minimum_approved_amount_el')){
+						$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, '.', ',' );
+					
+						$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">$'.$monthly_pay.'</span>', get_option('cplc_text_below_price_el')) ;
+						$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_per_month">/month</span>', $cplc_message) ;
+					 }
+					}
+				}
+			}
 			
-			$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">$'.$finance_price.'</span>', get_option('cplc_text_below_price_el')) ;
+			
+	
 			$price .= '<p class="cplc_financing_message">'.$cplc_message.'</p>';
-		}
-			
+ 
 
 		return $price;
 
 
 	}
+ 
+	/**
+	 * 	Get the lowest price of the product
+	 * 
+	 */
 
-	public function cplc_get_lowest_price_raw($post){
-
+	public function cplc_get_product_lowest_price($post){
 		$product = wc_get_product($post->ID);
 		$product_type = $product->get_type();
-
-		if('variable' == $product_type){
-			$min_price = $product->get_variation_price('min');
-			return $min_price;
+  
+ 
+		 if('variable' == $product_type){
 			 
-
-		}elseif('simple' == $product_type){
-
-			$product_regular_price  = $product->get_regular_price();
-			$product_sale_price = $product->get_sale_price();
-
-			//check if the product is on sale
-			if(!empty($product_sale_price)){
-				$finance_price = $product_sale_price;
-			}else{
-				$finance_price = $product_regular_price;
-			}
-		}
-
-		return $finance_price;
+			 $min_price = $product->get_variation_price('min');
+			 $finance_price = $min_price;
+ 
+		 }elseif('simple' == $product_type){
+ 
+			 $product_regular_price  = $product->get_regular_price();
+			 $product_sale_price = $product->get_sale_price();
+ 
+			 //check if the product is on sale
+			 if(!empty($product_sale_price)){
+				 $finance_price = $product_sale_price;
+			 }else{
+				 $finance_price = $product_regular_price;
+			 }
+		 }
+ 
+		 return $finance_price;
 	}
 
-	public function cplc_get_lowest_price($post){
-
-		$product = wc_get_product($post->ID);
-		$product_type = $product->get_type();
-
-		if('variable' == $product_type){
-			$min_price = $product->get_variation_price('min');
-			$finance_price = number_format( $this->test($min_price), 2, '.', ',' );
-			 
-
-		}elseif('simple' == $product_type){
-
-			$product_regular_price  = $product->get_regular_price();
-			$product_sale_price = $product->get_sale_price();
-
-			//check if the product is on sale
-			if(!empty($product_sale_price)){
-				$finance_price = number_format( $this->test($product_sale_price), 2, '.', ',' ) ;
-			}else{
-				$finance_price = number_format( $this->test($product_regular_price), 2, '.', ',' ) ;
-			}
-		}
-
-		return $finance_price;
-	}
-
+	/* Show the finance button */
 	public function cplc_pb_finance_now_launch()
 	{
 		global $post;
 	
-		$finance_price = $this->cplc_get_lowest_price($post);
+		$lowest_price = $this->cplc_get_product_lowest_price($post);
+		$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, '.', ',' );
 
-		$raw_price = $this->cplc_get_lowest_price_raw($post);
+		$cplc_message = str_replace("_CPLC_PRICE", '$'.$monthly_pay, get_option('cplc_financing_button_message_el')) ;
+		$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_btn_per_month">/month</span>', $cplc_message) ;
 
-		$cpl_message = str_replace("_CPLC_PRICE", '$'.$finance_price, get_option('cplc_financing_button_message_el')) ;
-
+		if($lowest_price >= get_option('cplc_minimum_approved_amount_el')){
+		
 		?>
-			<button id='cplc-launch-prequalify-modal'><?php echo $cpl_message; ?> </button>
+			<button id='cplc-launch-prequalify-single' style="background-color: <?php echo esc_attr(get_option('cplc_financing_button_bg_color_el')); ?>"><?php echo $cplc_message; ?> </button>
 
 			<style>
 				div#paybright-widget-container p{
-					display: none;
-				}
+ 					  display: none;  
+  			}
 			</style>
 		<?php
 
-	 
-		$pb_product_format = number_format((float)$raw_price, 2, '.', '');
+		}
 
+			$product_price = $this->cplc_get_product_lowest_price($post);
+			$pb_product_format =   $this->cplc_get_estimated_price($product_price) ; 
+			
+			$cplc_paybright_public = get_option('cplc_paybright_public_key_el');
 
-	echo "<script id='paybright' type='text/javascript' src='https://app.healthsmartfinancial.com/api/pb_woocommerce.js?public_key=".$cplc_paybright_public."&financedamount=$$pb_product_format'></script>
- 	<div id='paybright-widget-container'></div>";
+			echo "<script id='paybright' type='text/javascript' src='https://app.healthsmartfinancial.com/api/pb_woocommerce.js?public_key=".$cplc_paybright_public."&financedamount=$$pb_product_format'></script>
+			<div id='paybright-widget-container'></div>";
 	}
 
 
-	public function test($product_price){
-	 
-			$_multiplier = !empty(get_option('cplc_chmg_additional_fee_el')) ? get_option('cplc_chmg_additional_fee_el') : 1.10;
-			$_addition_type = get_option('cplc_calculation_method_el');
 
-			if('fixed' == $_addition_type){
-				$LoanAmt = (float) $product_price + $_multiplier;
-			}elseif('percentage' == $_addition_type){
-				$LoanAmt = (float) $product_price * $_multiplier;
-			}else{
-				$LoanAmt = (float) $product_price + $_multiplier;
-			}
-			
-			
-			//Get this as a options from the database: set by the user in the admin page
-			$LoanTerm = (float) !empty(get_option('cplc_advanced_loan_term_el')) ? get_option('cplc_advanced_loan_term_el') : 18;
-			
-			//Get this a defaukt value set by the user in the admin page
-			$LoanRate = (float) !empty(get_option('cplc_default_interest_rate_el')) ? get_option('cplc_default_interest_rate_el') : 0;
+	
 
-			if ($LoanRate == 0) {
+	/* Add the additional company charge to the product price */
+	public function cplc_get_estimated_price($product_price){
+		
+		$_multiplier = !empty(get_option('cplc_chmg_additional_fee_el')) ? get_option('cplc_chmg_additional_fee_el') : 1.10;
+		$_addition_type = get_option('cplc_calculation_method_el');
 
-				$result = ($LoanAmt / $LoanTerm);
-				$Finalresult = round($result,2);
-				return $Finalresult;
-			} else {
-				$newinterestrate = $LoanRate / 12;
-				$result = (($LoanAmt * ($newinterestrate / 100) * pow((1 + ($newinterestrate / 100)), $LoanTerm)) / ((pow((1 + ($newinterestrate / 100)), $LoanTerm)) - 1));
-				$Finalresult = round($result);
-				return $Finalresult;
+		if('fixed' == $_addition_type){
+			$LoanAmt = (float) $product_price + $_multiplier;
+		}elseif('percentage' == $_addition_type){
+			$LoanAmt = (float) $product_price * $_multiplier;
+		}else{
+			$LoanAmt = (float) $product_price + $_multiplier;
+		}
 
-			}
-             
-     
+		return $LoanAmt;
 	}
 
+
+	/* Calculate the estimated monthly payments */
+	function cplc_get_monthly_pay($price){
+
+		$LoanAmt = $this->cplc_get_estimated_price($price);
+ 
+		$LoanTerm = (float) !empty(get_option('cplc_advanced_loan_term_el')) ? get_option('cplc_advanced_loan_term_el') : 18;
+		$LoanRate = (float) !empty(get_option('cplc_default_interest_rate_el')) ? get_option('cplc_default_interest_rate_el') : 7.95;
+		 
+
+		if ($LoanRate == 0) {
+
+			$result = ($LoanAmt / $LoanTerm);
+			return round($result,2);
+			 
+		} else {
+			$newinterestrate = $LoanRate / 12;
+			$result = (($LoanAmt * ($newinterestrate / 100) * pow((1 + ($newinterestrate / 100)), $LoanTerm)) / ((pow((1 + ($newinterestrate / 100)), $LoanTerm)) - 1)) ;
+			return round($result,2);
+		
+		}
+	}
 }
