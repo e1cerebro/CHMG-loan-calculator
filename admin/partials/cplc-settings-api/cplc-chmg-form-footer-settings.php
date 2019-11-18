@@ -34,7 +34,7 @@ class CPLCFormFooterSettings{
 		?>
 		<div class="ui form">
 			<div class="field">
-				<textarea rows="5" columns="30"   name="cplc_footer_message_el"><?php echo $cplc_footer_message_el; ?></textarea>
+				<textarea rows="10" cols="80"   name="cplc_footer_message_el"><?php echo $cplc_footer_message_el; ?></textarea>
 			</div>
 		</div>
 	

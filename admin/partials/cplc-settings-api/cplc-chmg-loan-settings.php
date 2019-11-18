@@ -6,8 +6,7 @@ class CplcLoanSettings{
 
     public function __construct( $plugin_name ) {
  		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-     }
+      }
 
      public function register_section(){
         add_settings_section(
@@ -163,7 +162,7 @@ class CplcLoanSettings{
 
 		?>
 			 <div class="ui form">
-				<select  data-placeholder="Choose loan term..." name="cplc_available_loan_term_el[]" multiple class="chosen-select">
+				<select style="width: 100%;"  data-placeholder="Choose loan term..." name="cplc_available_loan_term_el[]" multiple class="chosen-select">
 					<option <?php echo @in_array(3, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="3" >3 Months</option>
 					<option <?php echo @in_array(6, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="6" >6 Months</option>
 					<option <?php echo @in_array(12, $cplc_available_loan_term_el) ? 'SELECTED' : ''; ?> value="12" >12 Months</option>
@@ -182,7 +181,7 @@ class CplcLoanSettings{
 		?>
 			 <div class="ui form">
 				<div class="field">
-					<textarea rows="3" columns="25" style="width:403px;" name="cplc_available_interest_rates_el"><?php echo $cplc_available_interest_rates_el; ?></textarea>
+					<textarea rows="3" cols="80"   name="cplc_available_interest_rates_el"><?php echo $cplc_available_interest_rates_el; ?></textarea>
 				</div>
 			 </div>	
 			 <p class="description"><?php _e('Enter a comma separated list of available interest rates', CPLC_CHMG_TEXT_DOMAIN) ?></p>
@@ -196,7 +195,7 @@ class CplcLoanSettings{
 		?>
 
 			 <div class="ui input">
-			 <input type="text" name="cplc_paybright_public_key_el" placeholder="Enter API key" value="<?php echo $cplc_paybright_public_key_el; ?>">
+			 <input type="text" style="width: 40%;"  name="cplc_paybright_public_key_el" placeholder="Enter API key" value="<?php echo $cplc_paybright_public_key_el; ?>">
 			</div>
 			<p class="description"><?php _e('Enter the paybright public API key', CPLC_CHMG_TEXT_DOMAIN) ?></p>
 

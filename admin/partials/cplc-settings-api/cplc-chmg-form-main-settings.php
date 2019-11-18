@@ -91,7 +91,7 @@ class CPLCFormMainSettings{
 	 
 		<div class="ui form">
 		<div class="field">
-				<textarea rows="3" columns="25"   name="cplc_form_sub_heading_el"><?php echo $cplc_form_sub_heading_el; ?></textarea>
+				<textarea rows="6" cols="80"   name="cplc_form_sub_heading_el"><?php echo $cplc_form_sub_heading_el; ?></textarea>
 			</div>
 		</div>
 		<?php
@@ -129,7 +129,7 @@ class CPLCFormMainSettings{
 		 
 			<div class="ui form">
 			<div class="field">
-					<textarea rows="3" columns="25"   name="cplc_form_qualify_button_sub_text_el"><?php echo $cplc_form_qualify_button_sub_text_el; ?></textarea>
+					<textarea rows="6" cols="80"   name="cplc_form_qualify_button_sub_text_el"><?php echo $cplc_form_qualify_button_sub_text_el; ?></textarea>
 				</div>
 			</div>
 			<?php

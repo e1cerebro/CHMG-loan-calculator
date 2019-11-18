@@ -3,12 +3,11 @@
 class CplcProductSettings{
 
     private $plugin_name;
-
+ 
     public function __construct( $plugin_name ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+ 
 	}
 
     public function register_section(){
