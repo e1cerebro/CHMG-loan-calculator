@@ -122,10 +122,11 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 
 	function cplc_change_product_price_display( $price ) {
 		
-			global $post, $wp;
+			global $post;
 
  			$cplc_current_locale = get_locale();
 
+			 $cplc_message  = '';
 
  			if( '1' == get_option('cplc_advanced_activate_for_single_only_el')){
 				if(is_product()){
@@ -138,7 +139,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 						//Determine the language of the user
 						if('fr_CA' == $cplc_current_locale){
 							$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, ',', ' ' );
-							$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">'.$monthly_pay.' $</span>', get_option('cplc_text_below_price_fr_el')) ;
+							$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">'.$monthly_pay.'$</span>', get_option('cplc_text_below_price_fr_el')) ;
 							$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_per_month">/mois</span>', $cplc_message) ;
 						}else if('en_CA' == $cplc_current_locale){
  							$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, '.', ',' );
@@ -162,16 +163,16 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 
 						if('fr_CA' == $cplc_current_locale){
 
-							$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, ', ', ' ' );
+							$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, ',', ' ' );
 					
-							$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">'.$monthly_pay.' $</span>', get_option('cplc_text_below_price_el')) ;
+							$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">'.$monthly_pay.'$</span>', get_option('cplc_text_below_price_fr_el')) ;
 							$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_per_month">/mois</span>', $cplc_message) ;
 
 						}else if('en_CA' == $cplc_current_locale){
 
 							$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, '.', ',' );
 					
-							$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">$'.$monthly_pay.'</span>', get_option('cplc_text_below_price_el')) ;
+							$cplc_message = str_replace("_CPLC_PRICE", '<span class="cplc_monthly_pay">$'.$monthly_pay.'</span>', get_option('cplc_text_below_price_en_el')) ;
 							$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_per_month">/month</span>', $cplc_message) ;
 						}
 
@@ -235,7 +236,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Public {
 		if('fr_CA' == $cplc_current_locale){
 			$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, ',', ' ' );
 
-			$cplc_message = str_replace("_CPLC_PRICE", $monthly_pay.' $ ', get_option('cplc_financing_button_message_fr_el')) ;
+			$cplc_message = str_replace("_CPLC_PRICE", $monthly_pay.'$ ', get_option('cplc_financing_button_message_fr_el')) ;
 			$cplc_message = str_replace("_PER_MONTH", '<span class="cplc_btn_per_month">/mois</span>', $cplc_message) ;
 		}elseif('en_CA' == $cplc_current_locale){
 			$monthly_pay  = number_format( $this->cplc_get_monthly_pay($lowest_price), 2, '.', ',' );
