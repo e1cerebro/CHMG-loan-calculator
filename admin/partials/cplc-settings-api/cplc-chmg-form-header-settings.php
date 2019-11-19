@@ -69,7 +69,7 @@ class CPLCFormHeaderSettings{
 	$cplc_header_title_el =  get_option('cplc_header_title_el');
 	?>
 	<div class="ui input">
-		<input type="text" name="cplc_header_title_el"   placeholder="Enter the header title" value="<?php echo $cplc_header_title_el; ?>">
+		<input type="text" style="width: 35%;" name="cplc_header_title_el"   placeholder="Enter the header title" value="<?php echo $cplc_header_title_el; ?>">
 	</div>
  
 	<?php
@@ -83,7 +83,7 @@ class CPLCFormHeaderSettings{
 
 	<div class="ui form">
 		<div class="field">
-			<textarea rows="3" columns="25"   name="cplc_header_sub_title_el"><?php echo $cplc_header_sub_title_el; ?></textarea>
+			<textarea rows="6" cols="80"   name="cplc_header_sub_title_el"><?php echo $cplc_header_sub_title_el; ?></textarea>
 		</div>
 	</div>
  

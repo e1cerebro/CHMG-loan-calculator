@@ -50,25 +50,45 @@ class CPLCAdvancedFinancingSettings{
 		);
 		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_default_interest_rate_el');
 		
-		/* Interest Rate field */
+		/* Message below price (ENGLISH) */
 		add_settings_field(
-			'cplc_text_below_price_el',
-			__( 'Message Below Main Price', CPLC_CHMG_TEXT_DOMAIN),
-			[ $this,'cplc_text_below_price_cb'],
+			'cplc_text_below_price_en_el',
+			__( 'Message Below Main Price (EN)', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_text_below_price_en_cb'],
 			$this->plugin_name."-cplc_advanced_financing",
 			'cplc_advanced_financing_section'
 		);
-		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_text_below_price_el');
+		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_text_below_price_en_el');
+
+		/*  Message below price (FRENCH) */
+		add_settings_field(
+			'cplc_text_below_price_fr_el',
+			__( 'Message Below Main Price (FR)', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_text_below_price_fr_cb'],
+			$this->plugin_name."-cplc_advanced_financing",
+			'cplc_advanced_financing_section'
+		);
+		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_text_below_price_fr_el');
 		
 		/* Interest Rate field */
 		add_settings_field(
-			'cplc_financing_button_message_el',
-			__( 'Finance Button Text', CPLC_CHMG_TEXT_DOMAIN),
-			[ $this,'cplc_financing_button_message_cb'],
+			'cplc_financing_button_message_en_el',
+			__( 'Finance Button Text (EN)', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_financing_button_message_en_cb'],
 			$this->plugin_name."-cplc_advanced_financing",
 			'cplc_advanced_financing_section'
 		);
-		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_financing_button_message_el');
+		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_financing_button_message_en_el');
+		
+		/* Interest Rate field */
+		add_settings_field(
+			'cplc_financing_button_message_fr_el',
+			__( 'Finance Button Text (FR)', CPLC_CHMG_TEXT_DOMAIN),
+			[ $this,'cplc_financing_button_message_fr_cb'],
+			$this->plugin_name."-cplc_advanced_financing",
+			'cplc_advanced_financing_section'
+		);
+		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_financing_button_message_fr_el');
 		
 
 		add_settings_field(
@@ -101,16 +121,14 @@ class CPLCAdvancedFinancingSettings{
 			'cplc_advanced_financing_section'
 		);
 		register_setting( $this->plugin_name."-cplc_advanced_financing", 'cplc_advanced_activate_for_single_only_el');
-		
 
-		
 	 }
 	 
 	 	/* ---------- START CARD BLOCK HTML FIELDS --------------- */
 		 public function cplc_enable_advanced_options_cb(){
 			$cplc_enable_advanced_options_el =  get_option('cplc_enable_advanced_options_el');
 			?>
-			   <label for="cplc_enable_advanced_options_el"><input <?php echo '1' == $cplc_enable_advanced_options_el ? checked : ''; ?> name="cplc_enable_advanced_options_el" type="checkbox" id="cplc_enable_advanced_options_el" value="1" > Check this box to activate advanced functionality</label>
+			   <label for="cplc_enable_advanced_options_el"><input <?php echo '1' == $cplc_enable_advanced_options_el ? 'checked' : ''; ?> name="cplc_enable_advanced_options_el" type="checkbox" id="cplc_enable_advanced_options_el" value="1" > Check this box to activate advanced functionality</label>
 			<?php
 		}
 
@@ -134,19 +152,37 @@ class CPLCAdvancedFinancingSettings{
 			<?php
         }
         
-		 public function cplc_text_below_price_cb(){
-			$cplc_text_below_price_el =  get_option('cplc_text_below_price_el');
+		 public function cplc_text_below_price_en_cb(){
+			$cplc_text_below_price_en_el =  get_option('cplc_text_below_price_en_el');
 			?>
-	            <textarea rows="3" columns="25" name="cplc_text_below_price_el"><?php echo $cplc_text_below_price_el; ?></textarea>
+	            <textarea rows="5" cols="50" name="cplc_text_below_price_en_el"><?php echo $cplc_text_below_price_en_el; ?></textarea>
                 <p class="description">Shortcodes: <br/>_CPLC_PRICE can be used for price <br/>_PER_MONTH for per month(/month)</p>
 			<?php
 		}
         
-		 public function cplc_financing_button_message_cb(){
-			$cplc_financing_button_message_el =  get_option('cplc_financing_button_message_el');
+        
+		 public function cplc_text_below_price_fr_cb(){
+			$cplc_text_below_price_fr_el =  get_option('cplc_text_below_price_fr_el');
 			?>
-	            <textarea rows="3" columns="25" name="cplc_financing_button_message_el"><?php echo $cplc_financing_button_message_el; ?></textarea>
+	            <textarea rows="5" cols="50" name="cplc_text_below_price_fr_el"><?php echo $cplc_text_below_price_fr_el; ?></textarea>
                 <p class="description">Shortcodes: <br/>_CPLC_PRICE can be used for price <br/>_PER_MONTH for per month(/month)</p>
+			<?php
+		}
+        
+		 public function cplc_financing_button_message_en_cb(){
+			$cplc_financing_button_message_en_el =  get_option('cplc_financing_button_message_en_el');
+			?>
+ 	            <textarea rows="5" cols="50" name="cplc_financing_button_message_en_el"><?php echo $cplc_financing_button_message_en_el; ?></textarea>
+                <p class="description">Shortcodes: <br/>_CPLC_PRICE can be used for price <br/>_PER_MONTH for per month(/month)</p>
+			<?php
+		}
+        
+        
+		 public function cplc_financing_button_message_fr_cb(){
+			$cplc_financing_button_message_fr_el =  get_option('cplc_financing_button_message_fr_el');
+			?>
+ 	            <textarea rows="5" cols="50" name="cplc_financing_button_message_fr_el"><?php echo $cplc_financing_button_message_fr_el; ?></textarea>
+                <p class="description">Shortcodes: <br/>_CPLC_PRICE can be used for price <br/>_PER_MONTH for per month(/mois)</p>
 			<?php
 		}
         
@@ -172,7 +208,7 @@ class CPLCAdvancedFinancingSettings{
 			$cplc_advanced_activate_for_single_only_el =  get_option('cplc_advanced_activate_for_single_only_el');
 			?>
                  
-                <label for="cplc_card_block_close_icon_el"><input <?php echo '1' == $cplc_advanced_activate_for_single_only_el ? checked : ''; ?> name="cplc_advanced_activate_for_single_only_el" type="checkbox" id="cplc_card_block_close_icon_el" value="1" > Enable this functionality for single product page only</label>
+                <label for="cplc_card_block_close_icon_el"><input <?php echo '1' == $cplc_advanced_activate_for_single_only_el ? 'checked' : ''; ?> name="cplc_advanced_activate_for_single_only_el" type="checkbox" id="cplc_card_block_close_icon_el" value="1" > Enable this functionality for single product page only</label>
  			<?php
 		}
 
