@@ -163,6 +163,11 @@ class Cplc_Chmg_Paybright_Loan_Calculator {
 		/* Adding Settings */
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'cplc_settings_options' );
 
+		//Updates
+
+		$this->loader->add_filter( 'site_transient_update_plugins', $plugin_admin, 'cplc_push_updates' );
+		$this->loader->add_action( 'upgrader_process_complete', $plugin_admin, 'cplc_after_update' , 10, 2 );
+
 
 	
 	}

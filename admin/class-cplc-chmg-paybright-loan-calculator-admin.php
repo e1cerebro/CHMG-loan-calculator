@@ -213,6 +213,58 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 
 
 	}
+
+	public function cplc_push_updates($transient){
+
+			if ( empty($transient->checked ) ) {
+				return $transient;
+			}
+
+			// trying to get from cache first, to disable cache comment 10,20,21,22,24
+			if( false == $remote = get_transient( 'cplc-chmg-paybright-loan-calculator' ) ) {
+		
+				// info.json is the file with the actual plugin information on your server
+				$remote = wp_remote_get( 'https://github.com/e1cerebro/CHMG-loan-calculator/blob/chmg-dev/remote.json', array(
+					'timeout' => 10,
+					'headers' => array(
+						'Accept' => 'application/json'
+					) )
+				);
+		
+				if ( !is_wp_error( $remote ) && isset( $remote['response']['code'] ) && $remote['response']['code'] == 200 && !empty( $remote['body'] ) ) {
+					set_transient( 'cplc-chmg-paybright-loan-calculator', $remote, 43200 ); // 12 hours cache
+				}
+		
+			}
+
+			if( $remote ) {
+ 
+				$remote = json_decode( $remote['body'] );
+		 
+				// your installed plugin version should be on the line below! You can obtain it dynamically of course 
+				if( $remote && version_compare( '1.0', $remote->version, '<' ) && version_compare($remote->requires, get_bloginfo('version'), '<' ) ) {
+					$res = new stdClass();
+					$res->slug = 'cplc-chmg-paybright-loan-calculator';
+					$res->plugin = 'CHMG-loan-calculator/cplc-chmg-paybright-loan-calculator.php'; // it could be just YOUR_PLUGIN_SLUG.php if your plugin doesn't have its own directory
+					$res->new_version = $remote->version;
+					$res->tested = $remote->tested;
+					$res->package = $remote->download_url;
+						   $transient->response[$res->plugin] = $res;
+						   //$transient->checked[$res->plugin] = $remote->version;
+					   }
+		 
+			}
+
+			return $transient;
+
+	}
+
+	function cplc_after_update( $upgrader_object, $options ) {
+		if ( $options['action'] == 'update' && $options['type'] === 'plugin' )  {
+			// just clean the cache when new plugin version is installed
+			delete_transient( 'cplc-chmg-paybright-loan-calculator' );
+		}
+	}
  
   
 }

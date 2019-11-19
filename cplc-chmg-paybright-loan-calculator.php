@@ -15,8 +15,10 @@
  * @wordpress-plugin
  * Plugin Name:       CHMG Paybright Loan Calculator
  * Plugin URI:        #
+ * Requires at least: 5.2
+ * Requires PHP:      7.2
  * Description:       Calculates the total loan amount for payBright financing.
- * Version:           2.0.0
+ * Version:           2.1.0
  * Author:            Canadian Home Medical Group
  * Author URI:        #
  * License:           GPL-2.0+
@@ -35,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CPLC_CHMG_PAYBRIGHT_LOAN_CALCULATOR_VERSION', '2.0.0' );
+define( 'CPLC_CHMG_PAYBRIGHT_LOAN_CALCULATOR_VERSION', '2.1.0' );
 define( 'CPLC_CHMG_TEXT_DOMAIN', 'cplc-chmg-paybright-loan-calculator' );
 define('CPLC_ROOT_PATH', plugin_dir_url( __FILE__ ).'public/');
 
