@@ -242,7 +242,7 @@ class Cplc_Chmg_Paybright_Loan_Calculator_Admin {
 				$remote = json_decode( $remote['body'] );
 		 
 				// your installed plugin version should be on the line below! You can obtain it dynamically of course 
-				if( $remote && version_compare( '1.0', $remote->version, '<' ) && version_compare($remote->requires, get_bloginfo('version'), '<' ) ) {
+				if( $remote && version_compare( '2.1', $remote->version, '<' ) && version_compare($remote->requires, get_bloginfo('version'), '<' ) ) {
 					$res = new stdClass();
 					$res->slug = 'cplc-chmg-paybright-loan-calculator';
 					$res->plugin = 'CHMG-loan-calculator/cplc-chmg-paybright-loan-calculator.php'; // it could be just YOUR_PLUGIN_SLUG.php if your plugin doesn't have its own directory
