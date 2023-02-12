@@ -25,14 +25,14 @@
  * @package    Cplc_Chmg_Paybright_Loan_Calculator
  */
 
-// If uninstall not called from WordPress, then exit.
+	// If uninstall not called from WordPress, then exit.
 	if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 		exit;
 	}
-
- 	/* Loan Calculator Tab settings*/
-	 if(!empty(get_option('cplc_chmg_loan_amount_input_el')))
-	 	delete_option('cplc_chmg_loan_amount_input_el');
+	
+	/* Loan Calculator Tab settings*/
+	if(!empty(get_option('cplc_chmg_loan_amount_input_el')))
+		delete_option('cplc_chmg_loan_amount_input_el');
 
 	if(!empty(get_option('cplc_chmg_additional_fee_el')))
 		delete_option('cplc_chmg_additional_fee_el');
@@ -81,8 +81,8 @@
 	if(!empty(get_option('cplc_card_block_total_amount_el')))
 		delete_option('cplc_card_block_total_amount_el');
 	
-	if(!empty(get_option('cplc_card_block_close_icon_el')))
-		delete_option('cplc_card_block_close_icon_el';
+	if(!empty(get_option('cplc_card_block_close_icon_el'))) {}
+		delete_option('cplc_card_block_close_icon_el');
 
 	/* Card Block Main Settings Tab */
 	if(!empty(get_option('cplc_footer_message_el')))
